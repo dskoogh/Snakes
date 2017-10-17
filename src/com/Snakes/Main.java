@@ -2,18 +2,23 @@ package com.Snakes;
 
 public class Main {
     public static void main(String[] args) {
-        // Menu, deciding how many players/AIs to participate
 
+        
+        // Menu, deciding how many players/AIs to participate. Level
+
+        // Playerklass avgör längd, kollisionsavkänning och sparar koordinat och riktning
+
+        // Count down
         while(true) {
             // Game starting
 
-            do {
-                // do / while loop tickar framåt.
-                // Movementklass som översätter key till ett riktningsbyte
+            // Keylyssnarklass som avslyssnar vilka keys som trycks
 
-            } while (key != null);
-        // Playerklass - längd, kollisionsavkänning
-        // Utskrivningsklass
+            // Movementklass som översätter key till ett riktningsbyte - en per spelare
+
+            // Utskrivningsklass
+
+            // Väntar X länge
         }
     }
 }
