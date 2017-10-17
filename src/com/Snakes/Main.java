@@ -20,12 +20,12 @@ public class Main {
         }
 //        Player playerOne = new Player();
 //        Player playerTwo = new Player();
-        boolean isAlive = true;
+
 
         // Menu, deciding how many players/AIs to participate. Level
 
         // Count down
-        while (isAlive) {
+        while (true) {
 
             terminal.clearScreen();
             // Put player on terminal
@@ -53,9 +53,21 @@ public class Main {
             // Check for crash
             Player.checkForCrash(players);
 
+            // Check for end
+            int death = 0;
+            for (Player player : players) {
+                if (!(player.isAlive())) {
+                    ++death;
+                }
+            }
+            if (death == players.size()) {
+                break;
+            }
         }
-        System.out.println("GAME OVER");
+
     }
+
+
 
 //    private static boolean checkForCrash(List<Player> players, boolean isAlive) {
 //        for (int i = 0; i < players.size(); i++) {

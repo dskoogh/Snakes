@@ -14,7 +14,7 @@ public class Player {
     private List<Tail> tail = new LinkedList<>();
     private boolean up, down, right, left;
     private char dir = 'd';
-    private final char UP = 'w', DOWN = 's', LEFT = 'a', RIGHT = 'd';
+    private char UP = 'w', DOWN = 's', LEFT = 'a', RIGHT = 'd';
     private int countR = 0;
     private boolean isAlive = true;
 
@@ -22,12 +22,16 @@ public class Player {
         return tail;
     }
 
-    public Player() {
+    public Player(char up, char down, char left, char right) {
         Random random = new Random();
-        
+        this.UP = up;
+        this.DOWN = down;
+        this.LEFT = left;
+        this.RIGHT = right;
         this.tail.add(new Tail(random.nextInt(20), random.nextInt(20)));
         this.right = true;
     }
+
     
     public Tail getHead() {
         return tail.get(0);
@@ -54,6 +58,10 @@ public class Player {
     }
     
     private void addTail() {
+        if(!isAlive){
+//            removeTail();
+            return;
+        }
         if (up) {
             tail.add(0, new Tail(tail.get(0).getX(), tail.get(0).getY() - 1));
         } else if (down) {
@@ -111,6 +119,10 @@ public class Player {
         tail.remove(tail.size()-1);
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public static void checkForCrash(List<Player> players) {
         // For each player
         for (int i = 0; i < players.size(); i++) {
@@ -126,6 +138,7 @@ public class Player {
                     if (players.get(i).getHead().getX() == players.get(j).getTail().get(k).getX() &&
                             players.get(i).getHead().getY() == players.get(j).getTail().get(k).getY()) {
                         players.get(i).isAlive = false;
+                        System.out.println("Player " + i + "dies");
                     }
                 }
             }
