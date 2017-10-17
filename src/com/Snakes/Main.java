@@ -1,32 +1,58 @@
 package com.Snakes;
 
 import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.googlecode.lanterna.input.Key;
-
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
-
-        for (int i = 0; i < 2; i++) {
-            players.add(new Player());
-        }
-//        Player playerOne = new Player();
-//        Player playerTwo = new Player();
-
-
+        
         // Menu, deciding how many players/AIs to participate. Level
-
-        // Count down
+        
+        // Count down splash
+        
+        
+        gameRun(terminal, players);
+    
+        // Splash screen
+        // Print stuff on screen
+    
+        Key key;
         while (true) {
-
+            do {
+                Thread.sleep(100);
+                key = terminal.readInput();
+                
+            } while (key == null);
+            
+            switch (key.getKind()) {
+                case Escape:
+                    terminal.exitPrivateMode();
+                    System.exit(1337);
+                    break;
+                case Enter:
+                    players.clear();
+                    gameRun(terminal, players);
+                    break;
+            }
+        }
+    }
+    
+    private static void gameRun(Terminal terminal, List<Player> players) throws InterruptedException {
+        // Add players
+        players.add(new Player('w', 's', 'a', 'd'));
+        players.add(new Player('i', 'k', 'j', 'l'));
+    
+    
+        while (true) {
+            
             terminal.clearScreen();
             // Put player on terminal
             for (int j = 0; j < players.size(); j++) {
@@ -38,21 +64,20 @@ public class Main {
                         terminal.putCharacter('♥');
                 }
             }
-
+            
             // Sleep
             Thread.sleep(150);
-
+            
             // Move
             Key key = terminal.readInput();
             for (int i = 0; i < players.size(); i++) {
                 players.get(i).keyListen(key);
                 players.get(i).move();
             }
-
-
+            
             // Check for crash
             Player.checkForCrash(players);
-
+            
             // Check for end
             int death = 0;
             for (Player player : players) {
@@ -64,23 +89,8 @@ public class Main {
                 break;
             }
         }
-
     }
-
-
-
-//    private static boolean checkForCrash(List<Player> players, boolean isAlive) {
-//        for (int i = 0; i < players.size(); i++) {
-//            for (int j = 1; j < players.get(i).getTail().size(); j++) {
-//                if (players.get(i).getHead().getX() == players.get(i).getTail().get(j).getX() && players.get(i).getHead().getY() == players.get(i).getTail().get(j).getY()) {
-//                    isAlive = false;
-//                    break;
-//                }
-//            }
-//        }
-//        return isAlive;
-//    }
-
+    
     private static Terminal getTerminal() {
         Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
         terminal.enterPrivateMode();

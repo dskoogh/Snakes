@@ -1,1 +1,23 @@
 Read .gitignore file for info about ignored files
+
+
+// For each player
+        for (int i = 0; i < players.size(); i++) {
+            // For all players
+            for (int j = 0; j < players.size(); j++) {
+                // For all snake parts
+                for (int k = 0; k < players.get(j).getTail().size(); k++) {
+                    // Check if comparing tail is own head
+                    if (players.get(i).getHead() == null) continue;
+                    if (players.get(i).getHead() == players.get(j).getHead()) {
+                        continue;
+                    }
+                    // Check crash
+                    if (players.get(i).getHead().getX() == players.get(j).getTail().get(k).getX() &&
+                            players.get(i).getHead().getY() == players.get(j).getTail().get(k).getY()) {
+                        players.get(i).isAlive = false;
+                        System.out.println("Player " + i + "dies");
+                    }
+                }
+            }
+        }

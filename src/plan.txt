@@ -1,0 +1,25 @@
+IMPORTANT
+0.  Välkomsmeny
+    A. Välj antal spelare (max 3)
+    B. Välj huvud/färg
+    C. Countdown som placerar spelarna på boarden och räknar ner till spelet börjar
+
+2.  Lägga in boundry, gränser till spelet.
+
+3.  GAME OVER splash som placeras ovanpå de döda ormarna (background color) (instruktioner för nytt spel/avslut)
+
+4.
+
+FUNDERA PÅ GAME.CLASS DÄR VI PLOCKAR UT METODERNA FRÅN MAIN
+
+FLUFF
+
+    Välja "huvudsymbol"
+
+    removeTail() crashar spelet, fixa det plx. - David fixar :hearts:
+
+    Bygga plan, collison med stolar, flygvärdinnor osv osv osv
+
+    Fler spelare!!
+
+    Lägg till HighScore
