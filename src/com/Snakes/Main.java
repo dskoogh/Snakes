@@ -1,7 +1,17 @@
 package com.Snakes;
 
+import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.terminal.Terminal;
+
+import java.nio.charset.Charset;
+
 public class Main {
     public static void main(String[] args) {
+        Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
+        terminal.enterPrivateMode();
+        terminal.setCursorVisible(false);
+
+        Player playerOne = new Player();
 
         
         // Menu, deciding how many players/AIs to participate. Level
@@ -10,6 +20,15 @@ public class Main {
 
         // Count down
         while(true) {
+
+            terminal.clearScreen();
+
+            terminal.moveCursor(playerOne.getTail(playerOne.getTail().size()));
+
+            //skriv ut
+            //sov
+            //key
+
             // Game starting
 
             // Keylyssnarklass som avslyssnar vilka keys som trycks
