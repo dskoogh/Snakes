@@ -6,13 +6,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import static com.googlecode.lanterna.input.Key.Kind.ArrowUp;
+
 
 public class Player {
     
     private List<Tail> tail = new LinkedList<>();
     private boolean up, down, right, left;
-    private char dir;
-    final char UP = 'w', DOWN = 's', LEFT = 'a', RIGHT = 'D';
+    private char dir = 'd';
+    final char UP = 'w', DOWN = 's', LEFT = 'a', RIGHT = 'd';
     
     public Player() {
         Random random = new Random();
@@ -22,17 +24,43 @@ public class Player {
     }
     
     public Tail getHead() {
-        return tail.get(tail.size() - 1);
+        return tail.get(0);
     }
     
     public void keyListen(Key key) {
         // Listen to where to go next
-        dir = key.getCharacter();
+        try {
+            dir = key.getCharacter();
+            
+        } catch (NullPointerException e) {
+        }
     }
     
     
     public void move() {
         // Update direction
+        updateDirection();
+        
+        // Add new Tail object in list tail, in direction bool
+        addTail();
+        
+        // Remove last tail
+        
+    }
+    
+    private void addTail() {
+        if (up) {
+            tail.add(0, new Tail(tail.get(0).getX(), tail.get(0).getY() - 1));
+        } else if (down) {
+            tail.add(0, new Tail(tail.get(0).getX(), tail.get(0).getY() + 1));
+        } else if (right) {
+            tail.add(0, new Tail(tail.get(0).getX() + 1, tail.get(0).getY()));
+        } else if (left) {
+            tail.add(0, new Tail(tail.get(0).getX() - 1, tail.get(0).getY()));
+        }
+    }
+    
+    private void updateDirection() {
         switch (dir) {
             case UP:
                 if (!up && !down) {
@@ -67,9 +95,6 @@ public class Player {
                 }
                 break;
         }
-        
-        // Add new Tail object in list tail, in direction bool
-        
     }
 }
 

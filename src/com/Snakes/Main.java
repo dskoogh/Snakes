@@ -26,15 +26,13 @@ public class Main {
             terminal.putCharacter('O');
             
             // Sleep
-            Thread.sleep(500);
+            Thread.sleep(100);
             
-            
+            // Move
             playerOne.keyListen(key);
             playerOne.move();
             
-
             
-            // Keylyssnarklass som avslyssnar vilka keys som trycks
 
             // Movementklass som översätter key till ett riktningsbyte - en per spelare
 
