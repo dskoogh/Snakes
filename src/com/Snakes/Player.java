@@ -15,7 +15,7 @@ public class Player {
     private char dir = nextRight;
     private int countR = 0;
     private boolean isAlive = true;
-    
+
     public List<Tail> getTail() {
         return tail;
     }
@@ -142,7 +142,7 @@ public class Player {
                         if (thisPlayer.getHead() == bodypart) {
                             continue;
                         }
-                        thisPlayer.point = counter;
+                        thisPlayer.point += counter;
                         thisPlayer.isAlive = false;
                     }
                 }
