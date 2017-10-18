@@ -9,6 +9,7 @@ import java.util.Random;
 public class Player {
     
     private List<Tail> tail = new LinkedList<>();
+    private int point = 0;
     private boolean up, down, right, left;
     private char nextUp, nextDown, nextLeft, nextRight;
     private char dir = nextRight;
@@ -150,6 +151,7 @@ public class Player {
             for (int j = 0; j < apples.size(); j++) {
                 if (players.get(i).getHead().getX() == apples.get(j).getX() && players.get(i).getHead().getY() == apples.get(j).getY()) {
                     apples.remove(j);
+                    players.get(i).point++;
                 }
             }
         }
