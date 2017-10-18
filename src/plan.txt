@@ -8,23 +8,37 @@ IMPORTANT
 
 3.  GAME OVER splash som placeras ovanpå de döda ormarna (background color) (instruktioner för nytt spel/avslut)
 
-4.
+4.  Splitta upp forloopen som gud glömde till fyra olika, då den idag fyller fyra funktioner(På juniors inrådan)
+
+5.  Placera ut "Äpplen"
+
+Jag tror man kan läsa in textfiler och använda både som countdown och som game over, om man bara gör en fil per "frame" i animationen och sätter en kort Thread.sleep
+mellan varje "frame".
 
 FUNDERA PÅ GAME.CLASS DÄR VI PLOCKAR UT METODERNA FRÅN MAIN
 
 FLUFF
 
-    Välja "huvudsymbol"
+    Välja "huvudsymbol"(Ge spelarna ett par alternativ, så man eliminerar användarfel) Förslag:
+        - Hjärta ( \u2764 )
+        - Häst ( \u265e )
+        - Paraply ( \u2602 )
+        - Virvel ( \u058e )
+        - Hammare & Skära ( \u262d )
+        - Sikte ( \u1cc0 )
+        - Hundratusen ( \u2188 )
+        - Kung ( \u265a )
+        - Svart cirkel ( \u2689 )
 
     removeTail() crashar spelet, fixa det plx. - David fixar :hearts:
 
-    Bygga plan, collison med stolar, flygvärdinnor osv osv osv
+    Bygga plan, collison med stolar, flygvärdinnor osv osv osv (igen, textfil = easypeasy)
 
-    Fler spelare!!
+    Fler spelare!! (en fjärde på ArrowKeys, femte/sjätte/sjunde på ett externt tangentborg för att stila? Då får man göra skillnad på gemener och versaler i getCharacter)
 
     Lägg till HighScore
-
 
 KEMALS TANKAR OCH IDEER
 
 Godis som gör en "invinsible" alltså att man kan gå igenom andra utan att dö osv
+    Ljud
