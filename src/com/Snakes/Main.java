@@ -101,6 +101,9 @@ public class Main {
         players.add(new Player('w', 's', 'a', 'd'));
         players.add(new Player('i', 'k', 'j', 'l'));
 
+        // Add level
+        Scan scanLevel = new Scan();
+
         // Make apples
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
@@ -116,6 +119,9 @@ public class Main {
 
             // Create Apples
             createApples(terminal, apples, apple, counter);
+
+            // Print level
+//            scanLevel.scanText("levelOne", terminal);
 
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
@@ -138,6 +144,7 @@ public class Main {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
                 scanGameOver.scanText("gameOver", terminal);
+                Scan.printScore(players,terminal);
                 break;
             }
 
