@@ -75,26 +75,17 @@ public class Main {
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
-<<<<<<< HEAD
 
-
-=======
-        
->>>>>>> 8e18fc1ac04b542b7bec9d4f9da1f31a4e9f0f25
         while (true) {
             
             terminal.clearScreen();
             
             // Create Apples
             createApples(terminal, apples, apple, counter);
-<<<<<<< HEAD
 
             // Print level
-//            scanLevel.scanText("levelOne", terminal);
+            scanLevel.scanText("levelOne-2", terminal);
 
-=======
-            
->>>>>>> 8e18fc1ac04b542b7bec9d4f9da1f31a4e9f0f25
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
             
