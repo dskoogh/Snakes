@@ -12,39 +12,77 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-        
+
         List<Player> players = new ArrayList<>();
         Terminal terminal = getTerminal();
         Scan scanMenu = new Scan();
-        
+
         welcomeScreen(terminal, scanMenu);
-        
         terminal.clearScreen();
-        
+
+        scanMenu.scanText("selectPlayers", terminal);
+        Key key;
+        int x = 0;
+        int y = 0;
+        while (true) {
+            do {
+                Thread.sleep(5);
+                key = terminal.readInput();
+            } while (key == null);
+
+            switch (key.getKind()) {
+                case ArrowUp:
+                    if (y != 1) {
+                        // Put white heart-char in old position
+                        terminal.moveCursor(x,y);
+                        terminal.applyForegroundColor(Terminal.Color.WHITE);
+                        terminal.putCharacter('♥');
+                        // Put red heart
+                        terminal.moveCursor(x, --y);
+                        terminal.applyForegroundColor(Terminal.Color.RED);
+                        terminal.putCharacter('♥');
+                    }
+                    break;
+                case ArrowDown:
+                    if(y!=5){
+                        // Put white heart-char in old position
+                        terminal.moveCursor(x,y);
+                        terminal.applyForegroundColor(Terminal.Color.WHITE);
+                        terminal.putCharacter('♥');
+                        // Put red heart
+                        terminal.moveCursor(x, ++y);
+                        terminal.applyForegroundColor(Terminal.Color.RED);
+                        terminal.putCharacter('♥');
+                    }
+                    break;
+            }
+        }
+
+
         gameRun(terminal, players);
-        
+
         gameOver(terminal, players);
     }
-    
+
     private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("menuSplash", terminal);
-        
+
         Key key;
         do {
             Thread.sleep(5);
             key = terminal.readInput();
         } while (key == null);
     }
-    
+
     private static void gameOver(Terminal terminal, List<Player> players) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
                 Thread.sleep(100);
                 key = terminal.readInput();
-                
+
             } while (key == null);
-            
+
             switch (key.getKind()) {
                 case Escape:
                     terminal.exitPrivateMode();
@@ -57,7 +95,7 @@ public class Main {
             }
         }
     }
-    
+
     private static void gameRun(Terminal terminal, List<Player> players) throws InterruptedException, FileNotFoundException {
         // Add players
         players.add(new Player('w', 's', 'a', 'd'));
@@ -70,37 +108,37 @@ public class Main {
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
         int counter = 0;
-        
+
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
 
         while (true) {
-            
+
             terminal.clearScreen();
-            
+
             // Create Apples
             createApples(terminal, apples, apple, counter);
 
             // Print level
-//            scanLevel.scanText("levelOne", terminal);
+            scanLevel.scanText("levelOne-2", terminal);
 
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
-            
+
             // Sleep
             Thread.sleep(150);
-            
+
             // Move
             movePlayers(terminal, players);
-            
+
             // Check for crash and for apples
             Player.checkForCrash(players, counter);
             Player.checkForApples(players, apples);
-            
+
             // Check for players death
             boolean playersDead = isPlayersDead(players);
-            
+
             // Game Over screen
             if (playersDead) {
                 m.stopAll(); // Stops mp3
@@ -113,7 +151,7 @@ public class Main {
             counter++;
         }
     }
-    
+
     private static boolean isPlayersDead(List<Player> players) {
         int death = 0;
         for (Player player : players) {
@@ -127,7 +165,7 @@ public class Main {
         }
         return playersDead;
     }
-    
+
     private static void movePlayers(Terminal terminal, List<Player> players) {
         Key key = terminal.readInput();
         for (int i = 0; i < players.size(); i++) {
@@ -135,17 +173,17 @@ public class Main {
             players.get(i).move();
         }
     }
-    
+
     private static void createApples(Terminal terminal, List<Apple> apples, Apple apple, int counter) {
         apple.createApples(counter, apples);
-        
+
         // Write Apples
         for (int i = 0; i < apples.size(); i++) {
             terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
             terminal.putCharacter('A');
         }
     }
-    
+
     private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
         for (int j = 0; j < players.size(); j++) {
             for (int i = 0; i < players.get(j).getTail().size(); i++) {
@@ -157,7 +195,7 @@ public class Main {
             }
         }
     }
-    
+
     private static Terminal getTerminal() {
         Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
         terminal.enterPrivateMode();
