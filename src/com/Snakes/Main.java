@@ -8,29 +8,23 @@ import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-        Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
+        Terminal terminal = getTerminal();
         Scan scanMenu = new Scan();
+        
         // Welcome screen
         scanMenu.scanText("menuSplash", terminal);
-
-        
-        // Menu, deciding how many players/AIs to participate. Level
-        
-        // Count down splash and music begins playing
-        
-        
+    
         gameRun(terminal, players);
     
-        // Splash screen
-        // Print stuff on screen
-
-
+        gameOver(terminal, players);
+    }
+    
+    private static void gameOver(Terminal terminal, List<Player> players) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
@@ -71,61 +65,77 @@ public class Main {
             terminal.clearScreen();
 
             // Create Apples
-            apple.createApples(counter, apples);
-
-            // Write Apples
-            for (int i = 0; i < apples.size(); i++) {
-                terminal.moveCursor(apples.get(i).getX(),apples.get(i).getY());
-                terminal.putCharacter('A');
-            }
+            createApples(terminal, apples, apple, counter);
 
             // Put player on terminal
-            for (int j = 0; j < players.size(); j++) {
-                for (int i = 0; i < players.get(j).getTail().size(); i++) {
-                    terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
-                    if (i != 0)
-                        terminal.putCharacter('\u25E9');
-                    else
-                        terminal.putCharacter('♥');
-                }
-            }
-            
+            putPlayerOnTerminal(terminal, players);
+    
             // Sleep
             Thread.sleep(150);
             
             // Move
-            Key key = terminal.readInput();
-            for (int i = 0; i < players.size(); i++) {
-                players.get(i).keyListen(key);
-                players.get(i).move();
-            }
+            movePlayers(terminal, players);
             
-            // Check for crash
+            // Check for crash and for apples
             Player.checkForCrash(players, counter);
             Player.checkForApples(players, apples);
-
-            // Check for end
-            int death = 0;
-            for (Player player : players) {
-                if (!(player.isAlive())) {
-                    ++death;
-                }
-            }
-            if (death == players.size()) {
-                String score;
-                for (int i = 0; i < players.size(); i++) {
-                    score = "Player " + (i + 1) + ": " + (players.get(i).getPoint() + counter);
-                    for (int j = 0; j < score.length(); j++) {
-                        terminal.moveCursor(10 + j, 1 + i);
-                        terminal.putCharacter(score.charAt(j));
-                    }
-                }
+            
+            // Check for players death
+            boolean playersDead = isPlayersDead(players);
+            
+            // Game Over screen
+            if (playersDead) {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
                 scanGameOver.scanText("gameOver", terminal);
                 break;
             }
+            
             counter++;
+        }
+    }
+    
+    private static boolean isPlayersDead(List<Player> players) {
+        int death = 0;
+        for (Player player : players) {
+            if (!(player.isAlive())) {
+                ++death;
+            }
+        }
+        boolean playersDead = false;
+        if (death == players.size()) {
+            playersDead = true;
+        }
+        return playersDead;
+    }
+    
+    private static void movePlayers(Terminal terminal, List<Player> players) {
+        Key key = terminal.readInput();
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).keyListen(key);
+            players.get(i).move();
+        }
+    }
+    
+    private static void createApples(Terminal terminal, List<Apple> apples, Apple apple, int counter) {
+        apple.createApples(counter, apples);
+        
+        // Write Apples
+        for (int i = 0; i < apples.size(); i++) {
+            terminal.moveCursor(apples.get(i).getX(),apples.get(i).getY());
+            terminal.putCharacter('A');
+        }
+    }
+    
+    private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
+        for (int j = 0; j < players.size(); j++) {
+            for (int i = 0; i < players.get(j).getTail().size(); i++) {
+                terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
+                if (i != 0)
+                    terminal.putCharacter('\u25E9');
+                else
+                    terminal.putCharacter('♥');
+            }
         }
     }
     
