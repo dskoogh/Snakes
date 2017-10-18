@@ -18,7 +18,7 @@ public class Main {
         
         // Menu, deciding how many players/AIs to participate. Level
         
-        // Count down splash
+        // Count down splash and music begins playing
         
         
         gameRun(terminal, players);
@@ -52,6 +52,9 @@ public class Main {
         players.add(new Player('w', 's', 'a', 'd'));
         players.add(new Player('i', 'k', 'j', 'l'));
     
+        // Play music
+        MP3Player m = new MP3Player();
+        m.play("Snakes.mp3");
     
         while (true) {
             
@@ -88,8 +91,10 @@ public class Main {
                 }
             }
             if (death == players.size()) {
+                m.stopAll();
                 break;
             }
+            
         }
     }
     
