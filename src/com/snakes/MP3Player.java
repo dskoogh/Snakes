@@ -1,4 +1,4 @@
-package com.Snakes;
+package com.snakes;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;

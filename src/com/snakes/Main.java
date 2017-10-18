@@ -1,4 +1,4 @@
-package com.Snakes;
+package com.snakes;
 
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;

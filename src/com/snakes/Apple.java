@@ -1,4 +1,4 @@
-package com.Snakes;
+package com.snakes;
 
 import java.util.List;
 import java.util.Random;

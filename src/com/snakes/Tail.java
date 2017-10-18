@@ -1,4 +1,4 @@
-package com.Snakes;
+package com.snakes;
 
 public class Tail {
     private int x;
