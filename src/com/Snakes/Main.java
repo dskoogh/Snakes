@@ -16,6 +16,7 @@ public class Main {
         Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
         Scan scanMenu = new Scan();
+        // Welcome screen
         scanMenu.scanText("menuSplash", terminal);
 
         
@@ -55,6 +56,8 @@ public class Main {
         // Add players
         players.add(new Player('w', 's', 'a', 'd'));
         players.add(new Player('i', 'k', 'j', 'l'));
+        
+        // Make apples
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
         int counter = 0;
