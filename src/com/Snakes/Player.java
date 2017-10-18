@@ -158,7 +158,7 @@ public class Player {
             for (int j = 0; j < apples.size(); j++) {
                 if (players.get(i).getHead().getX() == apples.get(j).getX() && players.get(i).getHead().getY() == apples.get(j).getY()) {
                     apples.remove(j);
-                    players.get(i).point++;
+                    players.get(i).point = players.get(i).point + 100;
                 }
             }
         }
