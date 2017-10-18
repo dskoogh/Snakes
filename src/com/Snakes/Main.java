@@ -101,9 +101,9 @@ public class Main {
             }
             
             // Check for crash
-            Player.checkForCrash(players);
+            Player.checkForCrash(players, counter);
             Player.checkForApples(players, apples);
-            
+
             // Check for end
             int death = 0;
             for (Player player : players) {
@@ -112,6 +112,14 @@ public class Main {
                 }
             }
             if (death == players.size()) {
+                String score;
+                for (int i = 0; i < players.size(); i++) {
+                    score = "Player " + (i + 1) + ": " + (players.get(i).getPoint() + counter);
+                    for (int j = 0; j < score.length(); j++) {
+                        terminal.moveCursor(10 + j, 1 + i);
+                        terminal.putCharacter(score.charAt(j));
+                    }
+                }
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
                 scanGameOver.scanText("gameOver", terminal);

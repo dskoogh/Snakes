@@ -34,7 +34,11 @@ public class Player {
         if (tail.size() == 0) return null;
         return tail.get(0);
     }
-    
+
+    public int getPoint() {
+        return point;
+    }
+
     public void keyListen(Key key) {
         // Listen to where to go next
         try {
@@ -127,7 +131,7 @@ public class Player {
         return isAlive;
     }
     
-    public static void checkForCrash(List<Player> players) {
+    public static void checkForCrash(List<Player> players, int counter) {
         
         for (Player thisPlayer : players) {
             for (Player otherPlayers : players) {
@@ -138,7 +142,7 @@ public class Player {
                         if (thisPlayer.getHead() == bodypart) {
                             continue;
                         }
-                        
+                        thisPlayer.point = counter;
                         thisPlayer.isAlive = false;
                     }
                 }
@@ -148,6 +152,9 @@ public class Player {
 
     public static void checkForApples(List<Player> players, List<Apple> apples) {
         for (int i = 0; i < players.size(); i++) {
+            if (!players.get(i).isAlive) {
+                break;
+            }
             for (int j = 0; j < apples.size(); j++) {
                 if (players.get(i).getHead().getX() == apples.get(j).getX() && players.get(i).getHead().getY() == apples.get(j).getY()) {
                     apples.remove(j);
