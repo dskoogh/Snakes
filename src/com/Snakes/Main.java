@@ -3,6 +3,7 @@ package com.Snakes;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.TerminalSize;
 
 import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
@@ -14,10 +15,11 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         Terminal terminal = getTerminal();
+
         List<Player> players = new ArrayList<>();
         Scan scanMenu = new Scan();
         scanMenu.scanText("menuSplash", terminal);
-
+        Thread.sleep(10000);
         
         // Menu, deciding how many players/AIs to participate. Level
         
