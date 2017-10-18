@@ -15,7 +15,9 @@ public class Main {
         Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
         Scan scanMenu = new Scan();
-        scanMenu.scanText("C:\\Users\\Administrator\\IdeaProjects\\Projekt 2\\Snakes\\src\\com\\Snakes\\menuSplash", terminal);
+        
+        // Welcome screen
+        scanMenu.scanText("menuSplash", terminal);
 
         
         // Menu, deciding how many players/AIs to participate. Level
@@ -96,7 +98,7 @@ public class Main {
             if (death == players.size()) {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
-                scanGameOver.scanText("C:\\Users\\Administrator\\IdeaProjects\\Projekt 2\\Snakes\\src\\com\\Snakes\\gameOver", terminal);
+                scanGameOver.scanText("gameOver", terminal);
                 break;
             }
             
