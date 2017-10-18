@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Main {
@@ -15,7 +16,6 @@ public class Main {
         Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
         Scan scanMenu = new Scan();
-        
         // Welcome screen
         scanMenu.scanText("menuSplash", terminal);
 
@@ -56,14 +56,27 @@ public class Main {
         // Add players
         players.add(new Player('w', 's', 'a', 'd'));
         players.add(new Player('i', 'k', 'j', 'l'));
-    
+        List<Apple> apples = new ArrayList<>();
+        Apple apple = new Apple();
+        int counter = 0;
+
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
-    
+
         while (true) {
-            
+
             terminal.clearScreen();
+
+            // Create Apples
+            apple.createApples(counter, apples);
+
+            // Write Apples
+            for (int i = 0; i < apples.size(); i++) {
+                terminal.moveCursor(apples.get(i).getX(),apples.get(i).getY());
+                terminal.putCharacter('A');
+            }
+
             // Put player on terminal
             for (int j = 0; j < players.size(); j++) {
                 for (int i = 0; i < players.get(j).getTail().size(); i++) {
@@ -101,7 +114,7 @@ public class Main {
                 scanGameOver.scanText("gameOver", terminal);
                 break;
             }
-            
+            counter++;
         }
     }
     
