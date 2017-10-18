@@ -21,7 +21,6 @@ public class Main {
         
         terminal.clearScreen();
         
-        
         gameRun(terminal, players);
         
         gameOver(terminal, players);
