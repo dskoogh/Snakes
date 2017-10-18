@@ -1,6 +1,7 @@
 package com.Snakes;
 
 import com.googlecode.lanterna.input.Key;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -34,11 +35,11 @@ public class Player {
         if (tail.size() == 0) return null;
         return tail.get(0);
     }
-
+    
     public int getPoint() {
         return point;
     }
-
+    
     public void keyListen(Key key) {
         // Listen to where to go next
         try {
@@ -63,7 +64,7 @@ public class Player {
     }
     
     private void addTail() {
-        if (!isAlive) {
+        if (!isAlive && countR % 10 == 0) {
             removeTail();
             return;
         }
@@ -142,14 +143,14 @@ public class Player {
                         if (thisPlayer.getHead() == bodypart) {
                             continue;
                         }
-                        thisPlayer.point = counter;
+                        thisPlayer.point += counter;
                         thisPlayer.isAlive = false;
                     }
                 }
             }
         }
     }
-
+    
     public static void checkForApples(List<Player> players, List<Apple> apples) {
         for (int i = 0; i < players.size(); i++) {
             if (!players.get(i).isAlive) {

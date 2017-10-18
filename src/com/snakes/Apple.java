@@ -25,8 +25,8 @@ public class Apple {
 
     public boolean createApples(int counter, List<Apple> apples) {
         Random rand = new Random();
-        if (counter % 100 == 0) {
-            return apples.add(new Apple(rand.nextInt(10), rand.nextInt(15)));
+        if (counter % 70 == 0) {
+            return apples.add(new Apple(rand.nextInt(70), rand.nextInt(20)));
         }
         return false;
     }
