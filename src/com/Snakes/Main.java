@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
 
+import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,22 +12,24 @@ import java.util.Random;
 
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
+        Scan scanMenu = new Scan();
+        scanMenu.scanText("menuSplash", terminal);
 
-        System.out.println('\u262d');
         
         // Menu, deciding how many players/AIs to participate. Level
         
-        // Count down splash
+        // Count down splash and music begins playing
         
         
         gameRun(terminal, players);
     
         // Splash screen
         // Print stuff on screen
-    
+
+
         Key key;
         while (true) {
             do {
@@ -48,7 +51,7 @@ public class Main {
         }
     }
     
-    private static void gameRun(Terminal terminal, List<Player> players) throws InterruptedException {
+    private static void gameRun(Terminal terminal, List<Player> players) throws InterruptedException, FileNotFoundException {
         // Add players
         players.add(new Player('w', 's', 'a', 'd'));
         players.add(new Player('i', 'k', 'j', 'l'));
@@ -56,6 +59,9 @@ public class Main {
         Apple apple = new Apple();
         int counter = 0;
 
+        // Play mp3
+        MP3Player m = new MP3Player();
+        m.play("Snakes.mp3");
 
         while (true) {
 
@@ -75,7 +81,7 @@ public class Main {
                 for (int i = 0; i < players.get(j).getTail().size(); i++) {
                     terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
                     if (i != 0)
-                        terminal.putCharacter('Z');
+                        terminal.putCharacter('\u25E9');
                     else
                         terminal.putCharacter('♥');
                 }
@@ -102,6 +108,9 @@ public class Main {
                 }
             }
             if (death == players.size()) {
+                m.stopAll(); // Stops mp3
+                Scan scanGameOver = new Scan();
+                scanGameOver.scanText("gameOver", terminal);
                 break;
             }
             counter++;
