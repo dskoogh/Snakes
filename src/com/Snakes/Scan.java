@@ -29,10 +29,23 @@ public class Scan {
             for (int i = 0; i < s.length() ; i++) {
                 terminal.moveCursor(i+x,y);
                 terminal.putCharacter(s.charAt(i));
-
             }
             y++;
         }
     }
 
+    private void printLevel(Terminal terminal) {
+        String level = "levelOne";
+        String levelRow;
+        int y = 1;
+
+        while (scanner.hasNextLine()) {
+            levelRow = scanner.nextLine();
+            for (int i = 0; i < levelRow.length(); i++) {
+                terminal.moveCursor(i, y);
+                terminal.putCharacter(levelRow.charAt(i));
+            }
+            y++;
+        }
+    }
 }
