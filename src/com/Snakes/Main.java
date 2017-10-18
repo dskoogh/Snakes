@@ -13,6 +13,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Terminal terminal = getTerminal();
         List<Player> players = new ArrayList<>();
+
+        System.out.println('\u262d');
         
         // Menu, deciding how many players/AIs to participate. Level
         
