@@ -34,4 +34,18 @@ public class Scan {
         }
     }
 
+    private void printLevel(Terminal terminal) {
+        String level = "levelOne";
+        String levelRow;
+        int y = 1;
+
+        while (scanner.hasNextLine()) {
+            levelRow = scanner.nextLine();
+            for (int i = 0; i < levelRow.length(); i++) {
+                terminal.moveCursor(i, y);
+                terminal.putCharacter(levelRow.charAt(i));
+            }
+            y++;
+        }
+    }
 }
