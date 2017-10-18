@@ -29,7 +29,6 @@ public class Scan {
             for (int i = 0; i < s.length() ; i++) {
                 terminal.moveCursor(i+x,y);
                 terminal.putCharacter(s.charAt(i));
-
             }
             y++;
         }
