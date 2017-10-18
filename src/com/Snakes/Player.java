@@ -140,7 +140,6 @@ public class Player {
                         
                         thisPlayer.isAlive = false;
                     }
-                    
                 }
             }
         }
