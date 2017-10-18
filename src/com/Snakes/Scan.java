@@ -4,6 +4,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Scan {
@@ -22,8 +23,8 @@ public class Scan {
 
     private void printScan(Terminal terminal) {
         String s = "";
-        int x = 2;
-        int y = 7;
+        int x = 0;
+        int y = 0;
         while (scanner.hasNextLine()) {
             s = scanner.nextLine();
             for (int i = 0; i < s.length() ; i++) {
@@ -34,16 +35,16 @@ public class Scan {
         }
     }
 
-    private void printLevel(Terminal terminal) {
-        String level = "levelOne";
-        String levelRow;
-        int y = 1;
+    public static void printScore(List<Player> players, Terminal terminal) {
+        String s;
+        int x = 10;
+        int y = 5;
 
-        while (scanner.hasNextLine()) {
-            levelRow = scanner.nextLine();
-            for (int i = 0; i < levelRow.length(); i++) {
-                terminal.moveCursor(i, y);
-                terminal.putCharacter(levelRow.charAt(i));
+        for (int i = 0; i < players.size(); i++) {
+            s = "Player " + (i + 1) + ": " + players.get(i).getPoint();
+            for (int j = 0; j < s.length(); j++) {
+                terminal.moveCursor(j + x, y);
+                terminal.putCharacter(s.charAt(j));
             }
             y++;
         }

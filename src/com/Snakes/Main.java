@@ -62,7 +62,10 @@ public class Main {
         // Add players
         players.add(new Player('w', 's', 'a', 'd'));
         players.add(new Player('i', 'k', 'j', 'l'));
-        
+
+        // Add level
+        Scan scanLevel = new Scan();
+
         // Make apples
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
@@ -71,14 +74,26 @@ public class Main {
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
+<<<<<<< HEAD
+
+
+=======
         
+>>>>>>> 8e18fc1ac04b542b7bec9d4f9da1f31a4e9f0f25
         while (true) {
             
             terminal.clearScreen();
             
             // Create Apples
             createApples(terminal, apples, apple, counter);
+<<<<<<< HEAD
+
+            // Print level
+//            scanLevel.scanText("levelOne", terminal);
+
+=======
             
+>>>>>>> 8e18fc1ac04b542b7bec9d4f9da1f31a4e9f0f25
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
             
@@ -100,9 +115,10 @@ public class Main {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
                 scanGameOver.scanText("gameOver", terminal);
+                Scan.printScore(players,terminal);
                 break;
             }
-            
+
             counter++;
         }
     }
