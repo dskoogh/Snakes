@@ -144,4 +144,14 @@ public class Player {
             }
         }
     }
+
+    public static void checkForApples(List<Player> players, List<Apple> apples) {
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = 0; j < apples.size(); j++) {
+                if (players.get(i).getHead().getX() == apples.get(j).getX() && players.get(i).getHead().getY() == apples.get(j).getY()) {
+                    apples.remove(j);
+                }
+            }
+        }
+    }
 }

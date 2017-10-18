@@ -6,8 +6,6 @@ IMPORTANT
 
 2.  Lägga in boundry, gränser till spelet.
 
-3.  GAME OVER splash som placeras ovanpå de döda ormarna (background color) (instruktioner för nytt spel/avslut)
-
 4.  Splitta upp forloopen som gud glömde till fyra olika, då den idag fyller fyra funktioner(På juniors inrådan)
 
 5.  Placera ut "Äpplen"
