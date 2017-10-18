@@ -121,7 +121,7 @@ public class Main {
             createApples(terminal, apples, apple, counter);
 
             // Print level
-//            scanLevel.scanText("levelOne", terminal);
+            scanLevel.scanText("levelOne-2", terminal);
 
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
