@@ -99,6 +99,7 @@ public class Main {
             
             // Check for crash
             Player.checkForCrash(players);
+            Player.checkForApples(players, apples);
             
             // Check for end
             int death = 0;
