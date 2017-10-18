@@ -3,7 +3,6 @@ package com.Snakes;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.terminal.TerminalSize;
 
 import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
@@ -13,25 +12,29 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-
+        
         List<Player> players = new ArrayList<>();
         Terminal terminal = getTerminal();
         Scan scanMenu = new Scan();
-
-        scanMenu.scanText("menuSplash", terminal);
-
         
-        // Menu, deciding how many players/AIs to participate. Level
+        welcomeScreen(terminal, scanMenu);
         
-        // Count down splash and music begins playing
-
+        terminal.clearScreen();
         
-        // Welcome screen
-        scanMenu.scanText("menuSplash", terminal);
-    
+        
         gameRun(terminal, players);
-    
+        
         gameOver(terminal, players);
+    }
+    
+    private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
+        scanMenu.scanText("menuSplash", terminal);
+        
+        Key key;
+        do {
+            Thread.sleep(5);
+            key = terminal.readInput();
+        } while (key == null);
     }
     
     private static void gameOver(Terminal terminal, List<Player> players) throws InterruptedException, FileNotFoundException {
@@ -65,21 +68,21 @@ public class Main {
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
         int counter = 0;
-
+        
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
-
+        
         while (true) {
-
+            
             terminal.clearScreen();
-
+            
             // Create Apples
             createApples(terminal, apples, apple, counter);
-
+            
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
-    
+            
             // Sleep
             Thread.sleep(150);
             
@@ -132,7 +135,7 @@ public class Main {
         
         // Write Apples
         for (int i = 0; i < apples.size(); i++) {
-            terminal.moveCursor(apples.get(i).getX(),apples.get(i).getY());
+            terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
             terminal.putCharacter('A');
         }
     }
