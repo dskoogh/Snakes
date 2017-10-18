@@ -77,7 +77,7 @@ public class Main {
             movePlayers(terminal, players);
             
             // Check for crash and for apples
-            Player.checkForCrash(players);
+            Player.checkForCrash(players, counter);
             Player.checkForApples(players, apples);
             
             // Check for players death
