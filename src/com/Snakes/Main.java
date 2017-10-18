@@ -59,7 +59,7 @@ public class Main {
                 for (int i = 0; i < players.get(j).getTail().size(); i++) {
                     terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
                     if (i != 0)
-                        terminal.putCharacter('Z');
+                        terminal.putCharacter('\u25E9');
                     else
                         terminal.putCharacter('♥');
                 }
