@@ -1,6 +1,7 @@
 package com.Snakes;
 
 import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.terminal.Terminal;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,13 +15,15 @@ public class Player {
     private char dir = nextRight;
     private int countR = 0;
     private boolean isAlive = true;
+    private Terminal.Color color;
     private char headChar;
-    
+
     public List<Tail> getTail() {
         return tail;
     }
     
-    public Player(char up, char down, char left, char right, char headChar, int position) {
+    public Player(char up, char down, char left, char right, char headChar, int position, Terminal.Color color) {
+
         this.nextUp = up;
         this.nextDown = down;
         this.nextLeft = left;
@@ -28,8 +31,13 @@ public class Player {
         this.tail.add(new Tail( 20, position*8-3));
         this.right = true;
         this.headChar = headChar;
+        this.color = color;
     }
-    
+
+    public Terminal.Color getColor() {
+        return color;
+    }
+
     public char getHeadChar() {
         return headChar;
     }
