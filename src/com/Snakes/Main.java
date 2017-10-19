@@ -199,6 +199,7 @@ public class Main {
         Thread.sleep(1000);
         terminal.clearScreen();
         scanMenu.scanText("noll", terminal);
+        Thread.sleep(500);
     }
 
     private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed) throws InterruptedException, FileNotFoundException {
@@ -279,7 +280,7 @@ public class Main {
         // Write Apples
         for (int i = 0; i < apples.size(); i++) {
             terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
-            terminal.putCharacter('A');
+            terminal.putCharacter('\u20dd');
         }
     }
     
