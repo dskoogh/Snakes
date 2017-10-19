@@ -32,6 +32,7 @@ public class Main {
     }
 
     private static String selectMode(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
+        terminal.clearScreen();
         scanMenu.scanText("selectPlayers", terminal);
 
         // Put red heart at first option
