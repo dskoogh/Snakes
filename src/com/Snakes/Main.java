@@ -21,14 +21,18 @@ public class Main {
 
         // Select mode
         String mode = selectMode(terminal, scanMenu);
+    
+        // Play mp3
+        MP3Player m = new MP3Player();
+        m.play("Snakes.mp3");
 
         int speed = selectSpeed(terminal, scanMenu);
 
         countDown(terminal,scanMenu);
 
-        gameRun(terminal, players, mode, speed);
-        
-        gameOver(terminal, players, mode, speed);
+        gameRun(terminal, players, mode, speed, m);
+
+        gameOver(terminal, players, mode, speed, m);
     }
 
     private static Terminal getTerminal() {
@@ -42,13 +46,14 @@ public class Main {
         scanMenu.scanText("selectPlayers", terminal);
 
         // Put red heart at first option
-        terminal.moveCursor(0, 0);
+
+        terminal.moveCursor(40,13);
         terminal.applyForegroundColor(Terminal.Color.RED);
         terminal.putCharacter('♥');
         Key key;
 
-        int x = 0;
-        int y = 0;
+        int x = 40;
+        int y = 13;
         boolean modeChosen = false;
         while (!modeChosen) {
             do {
@@ -58,7 +63,7 @@ public class Main {
 
             switch (key.getKind()) {
                 case ArrowUp:
-                    if (y != 0) {
+                    if (y != 13) {
                         // Put white heart-char in old position
                         terminal.moveCursor(x, y);
                         terminal.applyForegroundColor(Terminal.Color.WHITE);
@@ -71,7 +76,7 @@ public class Main {
                     }
                     break;
                 case ArrowDown:
-                    if (y != 4) {
+                    if (y != 17) {
                         // Put white heart-char in old position
                         terminal.moveCursor(x, y);
                         terminal.applyForegroundColor(Terminal.Color.WHITE);
@@ -190,6 +195,8 @@ public class Main {
     }
 
     private static void countDown(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
+        
+        // Load Graphics
         scanMenu.scanText("tre", terminal);
         Thread.sleep(1000);
         terminal.clearScreen();
@@ -202,7 +209,7 @@ public class Main {
         scanMenu.scanText("noll", terminal);
     }
 
-    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed) throws InterruptedException, FileNotFoundException {
+    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
 
         // Add players
         switch (mode) {
@@ -222,10 +229,6 @@ public class Main {
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
         int counter = 0;
-
-        // Play mp3
-        MP3Player m = new MP3Player();
-        m.play("Snakes.mp3");
 
         while (true) {
 
@@ -280,7 +283,7 @@ public class Main {
         // Write Apples
         for (int i = 0; i < apples.size(); i++) {
             terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
-            terminal.putCharacter('A');
+            terminal.putCharacter('\u2689');
         }
     }
 
@@ -311,7 +314,7 @@ public class Main {
         return playersDead;
     }
 
-    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed) throws InterruptedException, FileNotFoundException {
+    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
@@ -327,7 +330,7 @@ public class Main {
                     break;
                 case Enter:
                     players.clear();
-                    gameRun(terminal, players, mode, speed);
+                    gameRun(terminal, players, mode, speed, m);
                     break;
             }
         }
