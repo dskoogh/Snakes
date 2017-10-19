@@ -64,9 +64,12 @@ public class Player {
     }
     
     private void addTail() {
-        if (!isAlive && countR % 10 == 0) {
+
+       //Här går det snett!
+        if (!isAlive) {
             removeTail();
             return;
+
         }
         if (up) {
             tail.add(0, new Tail(tail.get(0).getX(), tail.get(0).getY() - 1));

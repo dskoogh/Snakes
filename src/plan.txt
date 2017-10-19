@@ -10,8 +10,7 @@ IMPORTANT
 
 5.  Placera ut "Äpplen"
 
-Jag tror man kan läsa in textfiler och använda både som countdown och som game over, om man bara gör en fil per "frame" i animationen och sätter en kort Thread.sleep
-mellan varje "frame".
+NÄR MAN DÖR DÖR MAN INTE!
 
 FUNDERA PÅ GAME.CLASS DÄR VI PLOCKAR UT METODERNA FRÅN MAIN
 
