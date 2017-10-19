@@ -35,7 +35,6 @@ public class Scan {
         scanner.close();
     }
 
-
     private void printSplash(Terminal terminal) throws FileNotFoundException, InterruptedException {
         String s = "";
         Random r = new Random();
