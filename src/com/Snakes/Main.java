@@ -101,12 +101,11 @@ public class Main {
     }
 
     private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
-        scanMenu.scanText("menuSplash", terminal, Terminal.Color.GREEN);
-
         Key key;
         do {
             Thread.sleep(5);
             key = terminal.readInput();
+            scanMenu.scanSplash("menuSplash", terminal);
         } while (key == null);
         terminal.clearScreen();
     }
