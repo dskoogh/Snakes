@@ -24,12 +24,14 @@ public class Main {
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
-        
+
+        int speed = selectSpeed(terminal, scanMenu);
+
         countDown(terminal,scanMenu);
         
-        gameRun(terminal, players, mode, m);
+        gameRun(terminal, players, mode, speed, m);
         
-        gameOver(terminal, players, mode, m);
+        gameOver(terminal, players, mode, speed, m);
     }
 
     private static Terminal getTerminal() {
@@ -120,7 +122,74 @@ public class Main {
     }
 
     private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
-    return 0;
+        scanMenu.scanText("selectSpeed", terminal);
+
+        terminal.moveCursor(0, 0);
+        terminal.applyForegroundColor(Terminal.Color.RED);
+        terminal.putCharacter('♥');
+        Key key;
+
+        int x = 0;
+        int y = 0;
+        boolean speedChosen = false;
+        while (!speedChosen) {
+            do {
+                Thread.sleep(5);
+                key = terminal.readInput();
+            } while (key == null);
+
+            switch (key.getKind()) {
+                case ArrowUp:
+                    if (y != 0) {
+                        // Put white heart-char in old position
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.WHITE);
+                        terminal.putCharacter('♥');
+                        // Put red heart
+                        y -= 2;
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.RED);
+                        terminal.putCharacter('♥');
+                    }
+                    break;
+                case ArrowDown:
+                    if (y != 6) {
+                        // Put white heart-char in old position
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.WHITE);
+                        terminal.putCharacter('♥');
+                        // Put red heart
+                        y += 2;
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.RED);
+                        terminal.putCharacter('♥');
+                    }
+                    break;
+                case Enter:
+                    speedChosen = true;
+                    break;
+            }
+        }
+
+        terminal.clearScreen();
+        terminal.applyForegroundColor(Terminal.Color.WHITE);
+
+        // Läs ut Game mode ur y
+        int speed = 0;
+        switch (y) {
+            case 0:
+                speed = 300;
+                break;
+            case 2:
+                speed = 150;
+                break;
+            case 4:
+                speed = 75;
+                break;
+            case 6:
+                speed = 25;
+        }
+        return speed;
     }
 
     private static void countDown(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
@@ -138,8 +207,9 @@ public class Main {
         scanMenu.scanText("noll", terminal);
     }
 
-    private static void gameRun(Terminal terminal, List<Player> players, String mode, MP3Player m) throws InterruptedException, FileNotFoundException {
+    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
 
+        // Add players
         switch (mode) {
             case "triple":
                 players.add(new Player('8','5','4','6', '\u265e', 3));
@@ -149,7 +219,6 @@ public class Main {
                 players.add(new Player('w', 's', 'a', 'd','\u2764', 1));
                 break;
         }
-        // Add players
 
         // Add level
         Scan scanLevel = new Scan();
@@ -173,7 +242,7 @@ public class Main {
             putPlayerOnTerminal(terminal, players);
 
             // Sleep
-            Thread.sleep(150);
+            Thread.sleep(speed);
 
             // Move
             movePlayers(terminal, players);
@@ -243,7 +312,7 @@ public class Main {
         return playersDead;
     }
 
-    private static void gameOver(Terminal terminal, List<Player> players, String mode, MP3Player m) throws InterruptedException, FileNotFoundException {
+    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
@@ -259,7 +328,7 @@ public class Main {
                     break;
                 case Enter:
                     players.clear();
-                    gameRun(terminal, players, mode, m);
+                    gameRun(terminal, players, mode, speed, m);
                     break;
             }
         }
