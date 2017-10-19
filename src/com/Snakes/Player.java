@@ -19,18 +19,7 @@ public class Player {
     private int red;
     private int green;
     private int blue;
-
-    public void setRed(int red) {
-        this.red = red;
-    }
-
-    public void setGreen(int green) {
-        this.green = green;
-    }
-
-    public void setBlue(int blue) {
-        this.blue = blue;
-    }
+    private char headChar;
 
     public int getRed() {
         return red;
@@ -48,7 +37,7 @@ public class Player {
         return tail;
     }
     
-    public Player(char up, char down, char left, char right) {
+    public Player(char up, char down, char left, char right, char headChar, int red, int green, int blue) {
         Random random = new Random();
         this.nextUp = up;
         this.nextDown = down;
@@ -56,6 +45,11 @@ public class Player {
         this.nextRight = right;
         this.tail.add(new Tail(random.nextInt(20), random.nextInt(20)));
         this.right = true;
+        this.headChar = headChar;
+    }
+    
+    public char getHeadChar() {
+        return headChar;
     }
     
     public Tail getHead() {

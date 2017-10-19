@@ -21,12 +21,32 @@ public class Main {
 
         // Select mode
         String mode = selectMode(terminal, scanMenu);
-        selectColor(terminal, scanMenu, mode);
 
+        countDown(terminal,scanMenu);
+        
         gameRun(terminal, players, mode);
 
         gameOver(terminal, players, mode);
     }
+
+    private static Terminal getTerminal() {
+        Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
+        terminal.enterPrivateMode();
+        terminal.setCursorVisible(false);
+        return terminal;
+    }
+
+    //        terminal.clearScreen();
+    //        } while (key == null);
+    //            key = terminal.readInput();
+    //            Thread.sleep(5);
+    //        do {
+    //        Key key;
+    //
+    //        scanMenu.scanText("menuSplash", terminal);
+//    private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
+
+//    }
 
     private static String selectMode(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("selectPlayers", terminal);
@@ -130,15 +150,28 @@ public class Main {
         }
     }
 
+    private static void countDown(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
+        scanMenu.scanText("tre", terminal);
+        Thread.sleep(1000);
+        terminal.clearScreen();
+        scanMenu.scanText("tva", terminal);
+        Thread.sleep(1000);
+        terminal.clearScreen();
+        scanMenu.scanText("ett", terminal);
+        Thread.sleep(1000);
+        terminal.clearScreen();
+        scanMenu.scanText("noll", terminal);
+    }
+
     private static void gameRun(Terminal terminal, List<Player> players, String mode) throws InterruptedException, FileNotFoundException {
 
         switch (mode) {
             case "triple":
-                players.add(new Player('8', '5', '4', '6'));
+                players.add(new Player('8','5','4','6', '\u265e', 241, 63, 195));
             case "double":
-                players.add(new Player('i', 'k', 'j', 'l'));
+                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 249, 245, 28));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd'));
+                players.add(new Player('w', 's', 'a', 'd','\u2764', 28, 147, 249));
                 break;
         }
         // Add players
@@ -231,113 +264,11 @@ public class Main {
             for (int i = 0; i < players.get(j).getTail().size(); i++) {
                 terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
                 terminal.applyForegroundColor(players.get(j).getRed(), players.get(j).getGreen(), players.get(j).getBlue());
-                if (i != 0)
+                if (j != 0)
                     terminal.putCharacter('\u25E9');
                 else
-                    terminal.putCharacter('♥');
+                    terminal.putCharacter(players.get(i).getHeadChar());
             }
-        }
-    }
-
-    private static Terminal getTerminal() {
-        Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
-        terminal.enterPrivateMode();
-        terminal.setCursorVisible(false);
-        return terminal;
-    }
-
-    private selectColor(Terminal terminal, Scan scanMenu, String mode) throws FileNotFoundException, InterruptedException {
-        scanMenu.scanText("selectColor", terminal);
-        int numberOfPlayers = 0;
-
-        while (true) {
-
-            terminal.moveCursor(0, 14);
-            terminal.putCharacter((char) (numberOfPlayers+1);
-
-            // Put red heart at first option
-            terminal.moveCursor(2, 0);
-            terminal.applyForegroundColor(Terminal.Color.RED);
-            terminal.putCharacter('♥');
-            Key key;
-
-            int x = 2;
-            int y = 0;
-            boolean modeChosen = false;
-            while (!modeChosen) {
-                do {
-                    Thread.sleep(5);
-                    key = terminal.readInput();
-                } while (key == null);
-
-                switch (key.getKind()) {
-                    case ArrowUp:
-                        if (y != 0) {
-                            // Put white heart-char in old position
-                            terminal.moveCursor(x, y);
-                            terminal.applyForegroundColor(Terminal.Color.WHITE);
-                            terminal.putCharacter('♥');
-                            // Put red heart
-                            y -= 2;
-                            terminal.moveCursor(x, y);
-                            terminal.applyForegroundColor(Terminal.Color.RED);
-                            terminal.putCharacter('♥');
-                        }
-                        break;
-                    case ArrowDown:
-                        if (y != 6) {
-                            // Put white heart-char in old position
-                            terminal.moveCursor(x, y);
-                            terminal.applyForegroundColor(Terminal.Color.WHITE);
-                            terminal.putCharacter('♥');
-                            // Put red heart
-                            y += 2;
-                            terminal.moveCursor(x, y);
-                            terminal.applyForegroundColor(Terminal.Color.RED);
-                            terminal.putCharacter('♥');
-                        }
-                        break;
-                    case Enter:
-                        modeChosen = true;
-                        break;
-                }
-            }
-
-            terminal.clearScreen();
-            terminal.applyForegroundColor(Terminal.Color.WHITE);
-
-            // Läs ut Game mode ur y
-            String color = "";
-            switch (y) {
-                case 0:
-                    color = "Pink";
-                    
-                    players.get(numberOfPlayers).setRed(246);
-                    players.get(numberOfPlayers).setGreen(69);
-                    players.get(numberOfPlayers).setRed(165);
-                    break;
-                case 2:
-                    color = "Yellow";
-                    players.get(numberOfPlayers).setRed(247);
-                    players.get(numberOfPlayers).setRed(233);
-                    players.get(numberOfPlayers).setRed(24);
-                    break;
-                case 4:
-                    color = "Blue";
-                    players.get(numberOfPlayers).setRed(24);
-                    players.get(numberOfPlayers).setRed(104);
-                    players.get(numberOfPlayers).setRed(247);
-            }
-            return mode;
-            if (numberOfPlayers == 0 && mode == "single")
-                break;
-            else if (numberOfPlayers == 1 && mode == "double") {
-                break;
-            }
-            else if (numberOfPlayers == 2 && mode == "triple") {
-                break;
-            }
-            numberOfPlayers++;
         }
     }
 }
