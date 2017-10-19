@@ -4,8 +4,6 @@ import com.googlecode.lanterna.input.Key;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 
 public class Player {
     
@@ -16,19 +14,24 @@ public class Player {
     private char dir = nextRight;
     private int countR = 0;
     private boolean isAlive = true;
+    private char headChar;
     
     public List<Tail> getTail() {
         return tail;
     }
     
-    public Player(char up, char down, char left, char right) {
-        Random random = new Random();
+    public Player(char up, char down, char left, char right, char headChar, int position) {
         this.nextUp = up;
         this.nextDown = down;
         this.nextLeft = left;
         this.nextRight = right;
-        this.tail.add(new Tail(random.nextInt(20), random.nextInt(20)));
+        this.tail.add(new Tail( 20, position*8-3));
         this.right = true;
+        this.headChar = headChar;
+    }
+    
+    public char getHeadChar() {
+        return headChar;
     }
     
     public Tail getHead() {

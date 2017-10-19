@@ -19,7 +19,6 @@ public class Main {
         
         welcomeScreen(terminal, scanMenu);
         
-        // Select mode
         String mode = selectMode(terminal, scanMenu);
 
         int speed = selectSpeed(terminal, scanMenu);
@@ -118,10 +117,10 @@ public class Main {
         return mode;
     }
 
-    private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
+    private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("selectSpeed", terminal);
 
-        terminal.moveCursor(0,0);
+        terminal.moveCursor(0, 0);
         terminal.applyForegroundColor(Terminal.Color.RED);
         terminal.putCharacter('♥');
         Key key;
@@ -187,7 +186,6 @@ public class Main {
                 speed = 25;
         }
         return speed;
-
     }
 
     private static void countDown(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
@@ -208,11 +206,11 @@ public class Main {
         // Add players
         switch (mode) {
             case "triple":
-                players.add(new Player('8','5','4','6'));
+                players.add(new Player('8','5','4','6', '\u265e', 3));
             case "double":
-                players.add(new Player('i', 'k', 'j', 'l'));
+                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 2));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd'));
+                players.add(new Player('w', 's', 'a', 'd','\u2764', 1));
                 break;
         }
 
@@ -267,18 +265,6 @@ public class Main {
         }
     }
 
-    private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
-        for (int j = 0; j < players.size(); j++) {
-            for (int i = 0; i < players.get(j).getTail().size(); i++) {
-                terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
-                if (i != 0)
-                    terminal.putCharacter('\u25E9');
-                else
-                    terminal.putCharacter('♥');
-            }
-        }
-    }
-
     private static void movePlayers(Terminal terminal, List<Player> players) {
         Key key = terminal.readInput();
         for (int i = 0; i < players.size(); i++) {
@@ -294,6 +280,19 @@ public class Main {
         for (int i = 0; i < apples.size(); i++) {
             terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
             terminal.putCharacter('A');
+        }
+    }
+    
+    private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
+    
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = 0; j < players.get(i).getTail().size(); j++) {
+                terminal.moveCursor(players.get(i).getTail().get(j).getX(), players.get(i).getTail().get(j).getY());
+                if (j != 0)
+                    terminal.putCharacter('\u25E9');
+                else
+                    terminal.putCharacter(players.get(i).getHeadChar());
+            }
         }
     }
 
