@@ -100,13 +100,13 @@ public class Main {
         // Läs ut Game mode ur y
         String mode = "";
         switch (y) {
-            case 0:
+            case 13:
                 mode = "single";
                 break;
-            case 2:
+            case 15:
                 mode = "double";
                 break;
-            case 4:
+            case 17:
                 mode = "triple";
         }
         return mode;
