@@ -262,7 +262,7 @@ public class Main {
                 Scan.printScore(players, terminal);
                 break;
             }
-
+            
             counter++;
         }
     }

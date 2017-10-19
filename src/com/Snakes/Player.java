@@ -167,7 +167,7 @@ public class Player {
         // Check for leaving the lanterna terminal boundaries
         int length = 100, width = 30;
         for (Player player : players) {
-            if (!player.isAlive) continue;
+            if (!player.isAlive) continue; // Sk
             if (!(player.getHead().getX() >= 0 && player.getHead().getX() < length)) {
                 player.isAlive = false;
             }
@@ -175,6 +175,9 @@ public class Player {
                 player.isAlive = false;
             }
         }
+        
+        // Check for crash with level boundaries
+        
         
     }
     
