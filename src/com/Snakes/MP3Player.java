@@ -34,13 +34,6 @@ public class MP3Player{
         }
     }
 
-    private boolean isLoop( MediaPlayer mediaPlayer){
-        if (mediaPlayer == null) {
-            return false;
-        }
-        return mediaPlayer.getCycleCount() == MediaPlayer.INDEFINITE;
-    }
-
     public void play(String filepath){
         play(filepath, false);
     }
@@ -65,31 +58,6 @@ public class MP3Player{
         }
     }
 
-    // Does not work, it will stop the tune automatically once it is called
-    // The modifier is therefore set to private
-    private void setRepeatMode(String filepath, boolean repeat){
-        try {
-            if (audioMap.containsKey(filepath)) {
-                this.setLoop( audioMap.get(filepath), repeat);
-            }
-        }
-        catch ( Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public boolean isRepeatMode(String filepath){
-        try {
-            if (audioMap.containsKey(filepath)) {
-                return this.isLoop( audioMap.get(filepath) );
-            }
-        }
-        catch ( Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public void stop(String filepath){
         try {
             if (audioMap.containsKey(filepath)) {
@@ -106,66 +74,5 @@ public class MP3Player{
     public void stopAll(){
         Set<String> keys = audioMap.keySet();
         keys.forEach(this::stop);
-    }
-
-    public void pause(String filepath){
-        try {
-            if (audioMap.containsKey(filepath)) {
-                MediaPlayer mediaPlayer = audioMap.get(filepath);
-                mediaPlayer.pause();
-            }
-        }
-        catch ( Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void pauseAll(){
-        Set<String> keys = audioMap.keySet();
-        keys.forEach(this::pause);
-    }
-
-    public void resume(String filepath){
-        try {
-            if (audioMap.containsKey(filepath)) {
-                MediaPlayer mediaPlayer = audioMap.get(filepath);
-                mediaPlayer.play();
-            }
-        }
-        catch ( Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void resumeAll(){
-        Set<String> keys = audioMap.keySet();
-        keys.forEach(this::resume);
-    }
-
-    public void playFX(String filepath){
-        try {
-            MediaPlayer mediaPlayer = new MediaPlayer( new Media(new File(filepath).toURI().toString()) );
-            mediaPlayer.play();
-        }
-        catch ( Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    // if method playFX stops while playing multiple sounds, try this one instead
-    public void playFXLightThread(String filepath){
-        new Thread( () -> {
-            try {
-                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filepath));
-                try {
-                    Player player = new Player(bis);
-                    player.play();
-                } catch (JavaLayerException e) {
-                    e.printStackTrace();
-                }
-            } catch ( IOException e ) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 }
