@@ -10,19 +10,20 @@ import java.util.Scanner;
 public class Scan {
     private Scanner scanner;
     
-    public void scanText(String file, Terminal terminal) throws FileNotFoundException {
+    public void scanText(String file, Terminal terminal, Terminal.Color color) throws FileNotFoundException {
         
         if (file == null) {
             System.out.println("Error");
         } else {
             scanner = new Scanner(new File(file));
         }
-        printScan(terminal);
+        printScan(terminal, color);
         scanner.close();
     }
     
-    private void printScan(Terminal terminal) {
+    private void printScan(Terminal terminal, Terminal.Color color) {
         String s = "";
+        terminal.applyForegroundColor(color);
         int x = 0;
         int y = 0;
         while (scanner.hasNextLine()) {

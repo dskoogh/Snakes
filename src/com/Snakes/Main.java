@@ -33,7 +33,7 @@ public class Main {
 
     private static String selectMode(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         terminal.clearScreen();
-        scanMenu.scanText("selectPlayers", terminal);
+        scanMenu.scanText("selectPlayers", terminal, Terminal.Color.WHITE);
 
         // Put red heart at first option
 
@@ -101,7 +101,7 @@ public class Main {
     }
 
     private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
-        scanMenu.scanText("menuSplash", terminal);
+        scanMenu.scanText("menuSplash", terminal, Terminal.Color.GREEN);
 
         Key key;
         do {
@@ -112,7 +112,7 @@ public class Main {
     }
 
     private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
-        scanMenu.scanText("selectSpeed", terminal);
+        scanMenu.scanText("selectSpeed", terminal, Terminal.Color.WHITE);
     
         terminal.moveCursor(40, 13);
         terminal.applyForegroundColor(Terminal.Color.RED);
@@ -186,16 +186,16 @@ public class Main {
     
         // Load Graphics
         terminal.clearScreen();
-        scanMenu.scanText("tre", terminal);
+        scanMenu.scanText("tre", terminal, Terminal.Color.BLUE);
         Thread.sleep(1000);
         terminal.clearScreen();
-        scanMenu.scanText("tva", terminal);
+        scanMenu.scanText("tva", terminal, Terminal.Color.MAGENTA);
         Thread.sleep(1000);
         terminal.clearScreen();
-        scanMenu.scanText("ett", terminal);
+        scanMenu.scanText("ett", terminal, Terminal.Color.CYAN);
         Thread.sleep(1000);
         terminal.clearScreen();
-        scanMenu.scanText("noll", terminal);
+        scanMenu.scanText("noll", terminal, Terminal.Color.RED);
         Thread.sleep(500);
     }
 
@@ -259,7 +259,7 @@ public class Main {
             if (playersDead) {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
-                scanGameOver.scanText("gameOver", terminal);
+                scanGameOver.scanText("gameOver", terminal, Terminal.Color.GREEN);
                 break;
             }
     
