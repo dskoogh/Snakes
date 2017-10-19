@@ -20,15 +20,8 @@ public class Main {
         MP3Player m = new MP3Player();
     
         welcomeScreen(terminal, scanMenu);
-    
-        // Select mode
-        String mode = selectMode(terminal, scanMenu);
-    
-        int speed = selectSpeed(terminal, scanMenu);
 
-        gameRun(terminal, players, mode, speed, m, scanMenu);
-
-        gameOver(terminal, players, mode, speed, m, scanMenu);
+        gameRun(terminal, players, m, scanMenu);
     }
 
     private static Terminal getTerminal() {
@@ -205,7 +198,13 @@ public class Main {
         Thread.sleep(500);
     }
 
-    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m, Scan scanMenu) throws InterruptedException, FileNotFoundException {
+    private static void gameRun(Terminal terminal, List<Player> players, MP3Player m, Scan scanMenu) throws InterruptedException, FileNotFoundException {
+    
+        // Select mode
+        String mode = selectMode(terminal, scanMenu);
+        
+        // Select speed
+        int speed = selectSpeed(terminal, scanMenu);
         
         // Load countDown
         countDown(terminal,scanMenu, m);
@@ -255,7 +254,7 @@ public class Main {
             // Check for players death
             boolean playersDead = isPlayersDead(players);
 
-            // Game Over screen
+            // Check for game over
             if (playersDead) {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
@@ -266,6 +265,8 @@ public class Main {
             
             counter++;
         }
+        
+        gameOver(terminal, players, m, scanMenu);
     }
 
     private static void movePlayers(Terminal terminal, List<Player> players) {
@@ -314,7 +315,7 @@ public class Main {
         return playersDead;
     }
 
-    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m, Scan scanMenu) throws InterruptedException, FileNotFoundException {
+    private static void gameOver(Terminal terminal, List<Player> players, MP3Player m, Scan scanMenu) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
@@ -330,7 +331,7 @@ public class Main {
                     break;
                 case Enter:
                     players.clear();
-                    gameRun(terminal, players, mode, speed, m, scanMenu);
+                    gameRun(terminal, players, m, scanMenu);
                     break;
             }
         }

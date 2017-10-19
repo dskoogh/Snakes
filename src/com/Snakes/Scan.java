@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class Scan {
     private Scanner scanner;
-
+    
     public void scanText(String file, Terminal terminal) throws FileNotFoundException {
-
+        
         if (file == null) {
             System.out.println("Error");
         } else {
@@ -20,22 +20,23 @@ public class Scan {
         printScan(terminal);
         scanner.close();
     }
-
+    
     private void printScan(Terminal terminal) {
         String s = "";
         int x = 0;
         int y = 0;
         while (scanner.hasNextLine()) {
             s = scanner.nextLine();
-            for (int i = 0; i < s.length() ; i++) {
+            for (int i = 0; i < s.length(); i++) {
                 terminal.moveCursor(i + x, y);
                 terminal.putCharacter(s.charAt(i));
             }
             y++;
         }
     }
+    
     public void scanLevel(String file, Terminal terminal) throws FileNotFoundException {
-
+        
         if (file == null) {
             System.out.println("Error");
         } else {
@@ -44,14 +45,14 @@ public class Scan {
         printLevel(terminal);
         scanner.close();
     }
-
+    
     private void printLevel(Terminal terminal) {
         String s = "";
         int x = 0;
         int y = 0;
         while (scanner.hasNextLine()) {
             s = scanner.nextLine();
-            for (int i = 0; i < s.length() ; i++) {
+            for (int i = 0; i < s.length(); i++) {
                 if (s.charAt(i) == '█') {
                     terminal.moveCursor(i + x, y);
                     terminal.applyBackgroundColor(Terminal.Color.WHITE);
@@ -63,12 +64,12 @@ public class Scan {
         }
         terminal.applyBackgroundColor(Terminal.Color.BLACK);
     }
-
+    
     public static void printScore(List<Player> players, Terminal terminal) {
         String s;
         int x = 10;
         int y = 5;
-
+        
         for (int i = 0; i < players.size(); i++) {
             s = "Player " + (i + 1) + ": " + players.get(i).getPoint();
             for (int j = 0; j < s.length(); j++) {
