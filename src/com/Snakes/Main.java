@@ -217,7 +217,7 @@ public class Main {
             case "double":
                 players.add(new Player('i', 'k', 'j', 'l', '\u265a', 2, Terminal.Color.CYAN));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd','\u2764', 1, Terminal.Color.MAGENTA));
+                players.add(new Player('w', 's', 'a', 'd','\u2764', 1, Terminal.Color.GREEN));
                 break;
         }
 
@@ -237,7 +237,7 @@ public class Main {
             createApples(terminal, apples, apple, counter);
 
             // Print level
-            scanLevel.scanGame("levelOne", terminal);
+            scanLevel.scanLevel("levelOne", terminal);
 
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);

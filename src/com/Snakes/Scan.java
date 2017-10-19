@@ -34,18 +34,18 @@ public class Scan {
             y++;
         }
     }
-    public void scanGame(String file, Terminal terminal) throws FileNotFoundException {
+    public void scanLevel(String file, Terminal terminal) throws FileNotFoundException {
 
         if (file == null) {
             System.out.println("Error");
         } else {
             scanner = new Scanner(new File(file));
         }
-        printGame(terminal);
+        printLevel(terminal);
         scanner.close();
     }
 
-    private void printGame(Terminal terminal) {
+    private void printLevel(Terminal terminal) {
         String s = "";
         int x = 0;
         int y = 0;
@@ -54,13 +54,14 @@ public class Scan {
             for (int i = 0; i < s.length() ; i++) {
                 if (s.charAt(i) == '█') {
                     terminal.moveCursor(i + x, y);
-                    terminal.applyBackgroundColor(Terminal.Color.BLACK);
+                    terminal.applyBackgroundColor(Terminal.Color.WHITE);
+                    terminal.applyForegroundColor(Terminal.Color.WHITE);
                     terminal.putCharacter(s.charAt(i));
-
                 }
             }
             y++;
         }
+        terminal.applyBackgroundColor(Terminal.Color.BLACK);
     }
 
     public static void printScore(List<Player> players, Terminal terminal) {
