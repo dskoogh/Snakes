@@ -284,6 +284,7 @@ public class Main {
         // Write Apples
         for (int i = 0; i < apples.size(); i++) {
             terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
+            terminal.applyForegroundColor(Terminal.Color.RED);
             terminal.putCharacter('\u2689');
         }
     }
