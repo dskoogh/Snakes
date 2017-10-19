@@ -16,7 +16,34 @@ public class Player {
     private char dir = nextRight;
     private int countR = 0;
     private boolean isAlive = true;
-    
+    private int red;
+    private int green;
+    private int blue;
+
+    public void setRed(int red) {
+        this.red = red;
+    }
+
+    public void setGreen(int green) {
+        this.green = green;
+    }
+
+    public void setBlue(int blue) {
+        this.blue = blue;
+    }
+
+    public int getRed() {
+        return red;
+    }
+
+    public int getGreen() {
+        return green;
+    }
+
+    public int getBlue() {
+        return blue;
+    }
+
     public List<Tail> getTail() {
         return tail;
     }

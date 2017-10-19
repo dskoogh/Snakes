@@ -3,6 +3,7 @@ package com.Snakes;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
+
 import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -11,30 +12,31 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-        
+
         List<Player> players = new ArrayList<>();
         Terminal terminal = getTerminal();
         Scan scanMenu = new Scan();
-        
+
         welcomeScreen(terminal, scanMenu);
-        
+
         // Select mode
         String mode = selectMode(terminal, scanMenu);
-        
+        selectColor(terminal, scanMenu, mode);
+
         gameRun(terminal, players, mode);
-        
+
         gameOver(terminal, players, mode);
     }
-    
+
     private static String selectMode(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("selectPlayers", terminal);
-        
+
         // Put red heart at first option
-        terminal.moveCursor(0,0);
+        terminal.moveCursor(0, 0);
         terminal.applyForegroundColor(Terminal.Color.RED);
         terminal.putCharacter('♥');
         Key key;
-        
+
         int x = 0;
         int y = 0;
         boolean modeChosen = false;
@@ -43,7 +45,7 @@ public class Main {
                 Thread.sleep(5);
                 key = terminal.readInput();
             } while (key == null);
-            
+
             switch (key.getKind()) {
                 case ArrowUp:
                     if (y != 0) {
@@ -79,7 +81,7 @@ public class Main {
 
         terminal.clearScreen();
         terminal.applyForegroundColor(Terminal.Color.WHITE);
-        
+
         // Läs ut Game mode ur y
         String mode = "";
         switch (y) {
@@ -94,10 +96,10 @@ public class Main {
         }
         return mode;
     }
-    
+
     private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("menuSplash", terminal);
-        
+
         Key key;
         do {
             Thread.sleep(5);
@@ -105,16 +107,16 @@ public class Main {
         } while (key == null);
         terminal.clearScreen();
     }
-    
+
     private static void gameOver(Terminal terminal, List<Player> players, String mode) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
                 Thread.sleep(100);
                 key = terminal.readInput();
-                
+
             } while (key == null);
-            
+
             switch (key.getKind()) {
                 case Escape:
                     terminal.exitPrivateMode();
@@ -127,12 +129,12 @@ public class Main {
             }
         }
     }
-    
+
     private static void gameRun(Terminal terminal, List<Player> players, String mode) throws InterruptedException, FileNotFoundException {
-        
+
         switch (mode) {
             case "triple":
-                players.add(new Player('8','5','4','6'));
+                players.add(new Player('8', '5', '4', '6'));
             case "double":
                 players.add(new Player('i', 'k', 'j', 'l'));
             case "single":
@@ -140,45 +142,45 @@ public class Main {
                 break;
         }
         // Add players
-        
+
         // Add level
         Scan scanLevel = new Scan();
-        
+
         // Make apples
         List<Apple> apples = new ArrayList<>();
         Apple apple = new Apple();
         int counter = 0;
-        
+
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
-        
+
         while (true) {
-            
+
             terminal.clearScreen();
-            
+
             // Create Apples
             createApples(terminal, apples, apple, counter);
-            
+
             // Print level
 //          scanLevel.scanText("levelOne-2", terminal);
-            
+
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
-            
+
             // Sleep
             Thread.sleep(150);
-            
+
             // Move
             movePlayers(terminal, players);
-            
+
             // Check for crash and for apples
             Player.checkForCrash(players, counter);
             Player.checkForApples(players, apples);
-            
+
             // Check for players death
             boolean playersDead = isPlayersDead(players);
-            
+
             // Game Over screen
             if (playersDead) {
                 m.stopAll(); // Stops mp3
@@ -187,11 +189,11 @@ public class Main {
                 Scan.printScore(players, terminal);
                 break;
             }
-            
+
             counter++;
         }
     }
-    
+
     private static boolean isPlayersDead(List<Player> players) {
         int death = 0;
         for (Player player : players) {
@@ -205,7 +207,7 @@ public class Main {
         }
         return playersDead;
     }
-    
+
     private static void movePlayers(Terminal terminal, List<Player> players) {
         Key key = terminal.readInput();
         for (int i = 0; i < players.size(); i++) {
@@ -213,21 +215,22 @@ public class Main {
             players.get(i).move();
         }
     }
-    
+
     private static void createApples(Terminal terminal, List<Apple> apples, Apple apple, int counter) {
         apple.createApples(counter, apples);
-        
+
         // Write Apples
         for (int i = 0; i < apples.size(); i++) {
             terminal.moveCursor(apples.get(i).getX(), apples.get(i).getY());
             terminal.putCharacter('A');
         }
     }
-    
+
     private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
         for (int j = 0; j < players.size(); j++) {
             for (int i = 0; i < players.get(j).getTail().size(); i++) {
                 terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
+                terminal.applyForegroundColor(players.get(j).getRed(), players.get(j).getGreen(), players.get(j).getBlue());
                 if (i != 0)
                     terminal.putCharacter('\u25E9');
                 else
@@ -235,11 +238,106 @@ public class Main {
             }
         }
     }
-    
+
     private static Terminal getTerminal() {
         Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
         terminal.enterPrivateMode();
         terminal.setCursorVisible(false);
         return terminal;
+    }
+
+    private selectColor(Terminal terminal, Scan scanMenu, String mode) throws FileNotFoundException, InterruptedException {
+        scanMenu.scanText("selectColor", terminal);
+        int numberOfPlayers = 0;
+
+        while (true) {
+
+            terminal.moveCursor(0, 14);
+            terminal.putCharacter((char) (numberOfPlayers+1);
+
+            // Put red heart at first option
+            terminal.moveCursor(2, 0);
+            terminal.applyForegroundColor(Terminal.Color.RED);
+            terminal.putCharacter('♥');
+            Key key;
+
+            int x = 2;
+            int y = 0;
+            boolean modeChosen = false;
+            while (!modeChosen) {
+                do {
+                    Thread.sleep(5);
+                    key = terminal.readInput();
+                } while (key == null);
+
+                switch (key.getKind()) {
+                    case ArrowUp:
+                        if (y != 0) {
+                            // Put white heart-char in old position
+                            terminal.moveCursor(x, y);
+                            terminal.applyForegroundColor(Terminal.Color.WHITE);
+                            terminal.putCharacter('♥');
+                            // Put red heart
+                            y -= 2;
+                            terminal.moveCursor(x, y);
+                            terminal.applyForegroundColor(Terminal.Color.RED);
+                            terminal.putCharacter('♥');
+                        }
+                        break;
+                    case ArrowDown:
+                        if (y != 6) {
+                            // Put white heart-char in old position
+                            terminal.moveCursor(x, y);
+                            terminal.applyForegroundColor(Terminal.Color.WHITE);
+                            terminal.putCharacter('♥');
+                            // Put red heart
+                            y += 2;
+                            terminal.moveCursor(x, y);
+                            terminal.applyForegroundColor(Terminal.Color.RED);
+                            terminal.putCharacter('♥');
+                        }
+                        break;
+                    case Enter:
+                        modeChosen = true;
+                        break;
+                }
+            }
+
+            terminal.clearScreen();
+            terminal.applyForegroundColor(Terminal.Color.WHITE);
+
+            // Läs ut Game mode ur y
+            String color = "";
+            switch (y) {
+                case 0:
+                    color = "Pink";
+                    
+                    players.get(numberOfPlayers).setRed(246);
+                    players.get(numberOfPlayers).setGreen(69);
+                    players.get(numberOfPlayers).setRed(165);
+                    break;
+                case 2:
+                    color = "Yellow";
+                    players.get(numberOfPlayers).setRed(247);
+                    players.get(numberOfPlayers).setRed(233);
+                    players.get(numberOfPlayers).setRed(24);
+                    break;
+                case 4:
+                    color = "Blue";
+                    players.get(numberOfPlayers).setRed(24);
+                    players.get(numberOfPlayers).setRed(104);
+                    players.get(numberOfPlayers).setRed(247);
+            }
+            return mode;
+            if (numberOfPlayers == 0 && mode == "single")
+                break;
+            else if (numberOfPlayers == 1 && mode == "double") {
+                break;
+            }
+            else if (numberOfPlayers == 2 && mode == "triple") {
+                break;
+            }
+            numberOfPlayers++;
+        }
     }
 }
