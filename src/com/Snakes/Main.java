@@ -136,11 +136,11 @@ public class Main {
 
         switch (mode) {
             case "triple":
-                players.add(new Player('8','5','4','6', '\u265e'));
+                players.add(new Player('8','5','4','6', '\u265e', 3));
             case "double":
-                players.add(new Player('i', 'k', 'j', 'l', '\u265a'));
+                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 2));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd','\u2764'));
+                players.add(new Player('w', 's', 'a', 'd','\u2764', 1));
                 break;
         }
         // Add players
