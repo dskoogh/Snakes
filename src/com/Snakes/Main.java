@@ -207,6 +207,7 @@ public class Main {
         Thread.sleep(1000);
         terminal.clearScreen();
         scanMenu.scanText("noll", terminal);
+        Thread.sleep(500);
     }
 
     private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
