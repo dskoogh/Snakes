@@ -1,11 +1,10 @@
 package com.Snakes;
 
 import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.terminal.Terminal;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 
 public class Player {
     
@@ -16,38 +15,29 @@ public class Player {
     private char dir = nextRight;
     private int countR = 0;
     private boolean isAlive = true;
-    private int red;
-    private int green;
-    private int blue;
+    private Terminal.Color color;
     private char headChar;
-
-    public int getRed() {
-        return red;
-    }
-
-    public int getGreen() {
-        return green;
-    }
-
-    public int getBlue() {
-        return blue;
-    }
 
     public List<Tail> getTail() {
         return tail;
     }
     
-    public Player(char up, char down, char left, char right, char headChar, int red, int green, int blue) {
-        Random random = new Random();
+    public Player(char up, char down, char left, char right, char headChar, int position, Terminal.Color color) {
+
         this.nextUp = up;
         this.nextDown = down;
         this.nextLeft = left;
         this.nextRight = right;
-        this.tail.add(new Tail(random.nextInt(20), random.nextInt(20)));
+        this.tail.add(new Tail( 20, position*8-3));
         this.right = true;
         this.headChar = headChar;
+        this.color = color;
     }
-    
+
+    public Terminal.Color getColor() {
+        return color;
+    }
+
     public char getHeadChar() {
         return headChar;
     }

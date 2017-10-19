@@ -22,11 +22,13 @@ public class Main {
         // Select mode
         String mode = selectMode(terminal, scanMenu);
 
-        countDown(terminal,scanMenu);
-        
-        gameRun(terminal, players, mode);
+        int speed = selectSpeed(terminal, scanMenu);
 
-        gameOver(terminal, players, mode);
+        countDown(terminal,scanMenu);
+
+        gameRun(terminal, players, mode, speed);
+        
+        gameOver(terminal, players, mode, speed);
     }
 
     private static Terminal getTerminal() {
@@ -35,18 +37,6 @@ public class Main {
         terminal.setCursorVisible(false);
         return terminal;
     }
-
-    //        terminal.clearScreen();
-    //        } while (key == null);
-    //            key = terminal.readInput();
-    //            Thread.sleep(5);
-    //        do {
-    //        Key key;
-    //
-    //        scanMenu.scanText("menuSplash", terminal);
-//    private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
-
-//    }
 
     private static String selectMode(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("selectPlayers", terminal);
@@ -128,26 +118,75 @@ public class Main {
         terminal.clearScreen();
     }
 
-    private static void gameOver(Terminal terminal, List<Player> players, String mode) throws InterruptedException, FileNotFoundException {
-        Key key;
-        while (true) {
-            do {
-                Thread.sleep(100);
-                key = terminal.readInput();
+    private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
+        scanMenu.scanText("selectSpeed", terminal);
 
+        terminal.moveCursor(0, 0);
+        terminal.applyForegroundColor(Terminal.Color.RED);
+        terminal.putCharacter('♥');
+        Key key;
+
+        int x = 0;
+        int y = 0;
+        boolean speedChosen = false;
+        while (!speedChosen) {
+            do {
+                Thread.sleep(5);
+                key = terminal.readInput();
             } while (key == null);
 
             switch (key.getKind()) {
-                case Escape:
-                    terminal.exitPrivateMode();
-                    System.exit(1337);
+                case ArrowUp:
+                    if (y != 0) {
+                        // Put white heart-char in old position
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.WHITE);
+                        terminal.putCharacter('♥');
+                        // Put red heart
+                        y -= 2;
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.RED);
+                        terminal.putCharacter('♥');
+                    }
+                    break;
+                case ArrowDown:
+                    if (y != 6) {
+                        // Put white heart-char in old position
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.WHITE);
+                        terminal.putCharacter('♥');
+                        // Put red heart
+                        y += 2;
+                        terminal.moveCursor(x, y);
+                        terminal.applyForegroundColor(Terminal.Color.RED);
+                        terminal.putCharacter('♥');
+                    }
                     break;
                 case Enter:
-                    players.clear();
-                    gameRun(terminal, players, mode);
+                    speedChosen = true;
                     break;
             }
         }
+
+        terminal.clearScreen();
+        terminal.applyForegroundColor(Terminal.Color.WHITE);
+
+        // Läs ut Game mode ur y
+        int speed = 0;
+        switch (y) {
+            case 0:
+                speed = 300;
+                break;
+            case 2:
+                speed = 150;
+                break;
+            case 4:
+                speed = 75;
+                break;
+            case 6:
+                speed = 25;
+        }
+        return speed;
     }
 
     private static void countDown(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
@@ -163,18 +202,18 @@ public class Main {
         scanMenu.scanText("noll", terminal);
     }
 
-    private static void gameRun(Terminal terminal, List<Player> players, String mode) throws InterruptedException, FileNotFoundException {
+    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed) throws InterruptedException, FileNotFoundException {
 
+        // Add players
         switch (mode) {
             case "triple":
-                players.add(new Player('8','5','4','6', '\u265e', 241, 63, 195));
+                players.add(new Player('8','5','4','6', '\u265e', 3, Terminal.Color.BLUE));
             case "double":
-                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 249, 245, 28));
+                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 2, Terminal.Color.CYAN));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd','\u2764', 28, 147, 249));
+                players.add(new Player('w', 's', 'a', 'd','\u2764', 1, Terminal.Color.MAGENTA));
                 break;
         }
-        // Add players
 
         // Add level
         Scan scanLevel = new Scan();
@@ -202,7 +241,7 @@ public class Main {
             putPlayerOnTerminal(terminal, players);
 
             // Sleep
-            Thread.sleep(150);
+            Thread.sleep(speed);
 
             // Move
             movePlayers(terminal, players);
@@ -227,20 +266,6 @@ public class Main {
         }
     }
 
-    private static boolean isPlayersDead(List<Player> players) {
-        int death = 0;
-        for (Player player : players) {
-            if (!(player.isAlive())) {
-                ++death;
-            }
-        }
-        boolean playersDead = false;
-        if (death == players.size()) {
-            playersDead = true;
-        }
-        return playersDead;
-    }
-
     private static void movePlayers(Terminal terminal, List<Player> players) {
         Key key = terminal.readInput();
         for (int i = 0; i < players.size(); i++) {
@@ -260,14 +285,50 @@ public class Main {
     }
 
     private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
-        for (int j = 0; j < players.size(); j++) {
-            for (int i = 0; i < players.get(j).getTail().size(); i++) {
-                terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
-                terminal.applyForegroundColor(players.get(j).getRed(), players.get(j).getGreen(), players.get(j).getBlue());
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = 0; j < players.get(i).getTail().size(); j++) {
+                terminal.moveCursor(players.get(i).getTail().get(j).getX(), players.get(i).getTail().get(j).getY());
+                terminal.applyForegroundColor(players.get(i).getColor());
                 if (j != 0)
                     terminal.putCharacter('\u25E9');
                 else
                     terminal.putCharacter(players.get(i).getHeadChar());
+            }
+        }
+    }
+
+    private static boolean isPlayersDead(List<Player> players) {
+        int death = 0;
+        for (Player player : players) {
+            if (!(player.isAlive())) {
+                ++death;
+            }
+        }
+        boolean playersDead = false;
+        if (death == players.size()) {
+            playersDead = true;
+        }
+        return playersDead;
+    }
+
+    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed) throws InterruptedException, FileNotFoundException {
+        Key key;
+        while (true) {
+            do {
+                Thread.sleep(100);
+                key = terminal.readInput();
+
+            } while (key == null);
+
+            switch (key.getKind()) {
+                case Escape:
+                    terminal.exitPrivateMode();
+                    System.exit(1337);
+                    break;
+                case Enter:
+                    players.clear();
+                    gameRun(terminal, players, mode, speed);
+                    break;
             }
         }
     }
