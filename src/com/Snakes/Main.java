@@ -12,13 +12,14 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-        
+
         List<Player> players = new ArrayList<>();
         Terminal terminal = getTerminal();
         Scan scanMenu = new Scan();
-        
+
         welcomeScreen(terminal, scanMenu);
-        
+
+        // Select mode
         String mode = selectMode(terminal, scanMenu);
     
         // Play mp3
@@ -28,9 +29,9 @@ public class Main {
         int speed = selectSpeed(terminal, scanMenu);
 
         countDown(terminal,scanMenu);
-        
+
         gameRun(terminal, players, mode, speed, m);
-        
+
         gameOver(terminal, players, mode, speed, m);
     }
 
@@ -41,21 +42,11 @@ public class Main {
         return terminal;
     }
 
-    private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
-        scanMenu.scanText("menuSplash", terminal);
-
-        Key key;
-        do {
-            Thread.sleep(5);
-            key = terminal.readInput();
-        } while (key == null);
-        terminal.clearScreen();
-    }
-
     private static String selectMode(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("selectPlayers", terminal);
 
         // Put red heart at first option
+
         terminal.moveCursor(40,13);
         terminal.applyForegroundColor(Terminal.Color.RED);
         terminal.putCharacter('♥');
@@ -119,6 +110,17 @@ public class Main {
                 mode = "triple";
         }
         return mode;
+    }
+
+    private static void welcomeScreen(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
+        scanMenu.scanText("menuSplash", terminal);
+
+        Key key;
+        do {
+            Thread.sleep(5);
+            key = terminal.readInput();
+        } while (key == null);
+        terminal.clearScreen();
     }
 
     private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
@@ -212,11 +214,11 @@ public class Main {
         // Add players
         switch (mode) {
             case "triple":
-                players.add(new Player('8','5','4','6', '\u265e', 3));
+                players.add(new Player('8','5','4','6', '\u265e', 3, Terminal.Color.BLUE));
             case "double":
-                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 2));
+                players.add(new Player('i', 'k', 'j', 'l', '\u265a', 2, Terminal.Color.CYAN));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd','\u2764', 1));
+                players.add(new Player('w', 's', 'a', 'd','\u2764', 1, Terminal.Color.MAGENTA));
                 break;
         }
 
@@ -284,12 +286,12 @@ public class Main {
             terminal.putCharacter('\u2689');
         }
     }
-    
+
     private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
-    
         for (int i = 0; i < players.size(); i++) {
             for (int j = 0; j < players.get(i).getTail().size(); j++) {
                 terminal.moveCursor(players.get(i).getTail().get(j).getX(), players.get(i).getTail().get(j).getY());
+                terminal.applyForegroundColor(players.get(i).getColor());
                 if (j != 0)
                     terminal.putCharacter('\u25E9');
                 else
