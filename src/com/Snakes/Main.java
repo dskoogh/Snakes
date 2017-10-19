@@ -21,12 +21,12 @@ public class Main {
 
         // Select mode
         String mode = selectMode(terminal, scanMenu);
+
+        int speed = selectSpeed(terminal, scanMenu);
     
         // Play mp3
         MP3Player m = new MP3Player();
         m.play("Snakes.mp3");
-
-        int speed = selectSpeed(terminal, scanMenu);
 
         countDown(terminal,scanMenu);
 
