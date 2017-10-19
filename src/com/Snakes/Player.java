@@ -136,7 +136,7 @@ public class Player {
         
         if (isAlive && countR % 10 == 0) {
             return;
-        } else if (!isAlive && countR % 50 == 0) {
+        } else if (!isAlive && countR % 2 == 0) {
             return;
         }
         tail.remove(tail.size() - 1);
