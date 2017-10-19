@@ -17,27 +17,27 @@ public class Player {
     private boolean isAlive = true;
     private Terminal.Color color;
     private char headChar;
-
+    
     public List<Tail> getTail() {
         return tail;
     }
     
     public Player(char up, char down, char left, char right, char headChar, int position, Terminal.Color color) {
-
+        
         this.nextUp = up;
         this.nextDown = down;
         this.nextLeft = left;
         this.nextRight = right;
-        this.tail.add(new Tail( 20, position*8-3));
+        this.tail.add(new Tail(20, position * 8 - 3));
         this.right = true;
         this.headChar = headChar;
         this.color = color;
     }
-
+    
     public Terminal.Color getColor() {
         return color;
     }
-
+    
     public char getHeadChar() {
         return headChar;
     }
@@ -75,12 +75,12 @@ public class Player {
     }
     
     private void addTail() {
-
-       //Här går det snett!
+        
+        //Här går det snett!
         if (!isAlive) {
             removeTail();
             return;
-
+            
         }
         if (up) {
             tail.add(0, new Tail(tail.get(0).getX(), tail.get(0).getY() - 1));
@@ -163,6 +163,19 @@ public class Player {
                 }
             }
         }
+        
+        // Check for leaving the lanterna terminal boundaries
+        int length = 100, width = 30;
+        for (Player player : players) {
+            if (!player.isAlive) continue;
+            if (!(player.getHead().getX() >= 0 && player.getHead().getX() < length)) {
+                player.isAlive = false;
+            }
+            if (!(player.getHead().getY() >= 0 && player.getHead().getY() < width)) {
+                player.isAlive = false;
+            }
+        }
+        
     }
     
     public static void checkForApples(List<Player> players, List<Apple> apples) {

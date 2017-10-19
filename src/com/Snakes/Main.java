@@ -17,23 +17,18 @@ public class Main {
         List<Player> players = new ArrayList<>();
         Terminal terminal = getTerminal();
         Scan scanMenu = new Scan();
-
+        MP3Player m = new MP3Player();
+    
         welcomeScreen(terminal, scanMenu);
-
+    
         // Select mode
         String mode = selectMode(terminal, scanMenu);
-
-        int speed = selectSpeed(terminal, scanMenu);
     
-        // Play mp3
-        MP3Player m = new MP3Player();
-        m.play("Snakes.mp3");
+        int speed = selectSpeed(terminal, scanMenu);
 
-        countDown(terminal,scanMenu);
+        gameRun(terminal, players, mode, speed, m, scanMenu);
 
-        gameRun(terminal, players, mode, speed, m);
-
-        gameOver(terminal, players, mode, speed, m);
+        gameOver(terminal, players, mode, speed, m, scanMenu);
     }
 
     private static Terminal getTerminal() {
@@ -99,16 +94,14 @@ public class Main {
         terminal.applyForegroundColor(Terminal.Color.WHITE);
 
         // Läs ut Game mode ur y
-        String mode = "";
+        String mode = "single";
         switch (y) {
             case 13:
-                mode = "single";
-                break;
+                return mode = "single";
             case 15:
-                mode = "double";
-                break;
+                return mode = "double";
             case 17:
-                mode = "triple";
+                return mode = "triple";
         }
         return mode;
     }
@@ -126,14 +119,15 @@ public class Main {
 
     private static int selectSpeed(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException {
         scanMenu.scanText("selectSpeed", terminal);
-
-        terminal.moveCursor(0, 0);
+    
+        terminal.moveCursor(40, 13);
         terminal.applyForegroundColor(Terminal.Color.RED);
         terminal.putCharacter('♥');
         Key key;
-
-        int x = 0;
-        int y = 0;
+    
+        int x = 40;
+        int y = 13;
+        
         boolean speedChosen = false;
         while (!speedChosen) {
             do {
@@ -143,7 +137,7 @@ public class Main {
 
             switch (key.getKind()) {
                 case ArrowUp:
-                    if (y != 0) {
+                    if (y != 13) {
                         // Put white heart-char in old position
                         terminal.moveCursor(x, y);
                         terminal.applyForegroundColor(Terminal.Color.WHITE);
@@ -156,7 +150,7 @@ public class Main {
                     }
                     break;
                 case ArrowDown:
-                    if (y != 6) {
+                    if (y != 19) {
                         // Put white heart-char in old position
                         terminal.moveCursor(x, y);
                         terminal.applyForegroundColor(Terminal.Color.WHITE);
@@ -180,24 +174,24 @@ public class Main {
         // Läs ut Game mode ur y
         int speed = 0;
         switch (y) {
-            case 0:
-                speed = 300;
-                break;
-            case 2:
-                speed = 150;
-                break;
-            case 4:
-                speed = 75;
-                break;
-            case 6:
-                speed = 25;
+            case 13:
+                return speed = 300;
+            case 13+2:
+                return speed = 150;
+            case 13+4:
+                return speed = 75;
+            case 13+6:
+                return speed = 25;
         }
-        return speed;
+        return 150;
     }
 
-    private static void countDown(Terminal terminal, Scan scanMenu) throws FileNotFoundException, InterruptedException{
-        
+    private static void countDown(Terminal terminal, Scan scanMenu, MP3Player m) throws FileNotFoundException, InterruptedException{
+        // Start playing music
+        m.play("Snakes.mp3");
+    
         // Load Graphics
+        terminal.clearScreen();
         scanMenu.scanText("tre", terminal);
         Thread.sleep(1000);
         terminal.clearScreen();
@@ -211,8 +205,11 @@ public class Main {
         Thread.sleep(500);
     }
 
-    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
-
+    private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m, Scan scanMenu) throws InterruptedException, FileNotFoundException {
+        
+        // Load countDown
+        countDown(terminal,scanMenu, m);
+        
         // Add players
         switch (mode) {
             case "triple":
@@ -317,7 +314,7 @@ public class Main {
         return playersDead;
     }
 
-    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
+    private static void gameOver(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m, Scan scanMenu) throws InterruptedException, FileNotFoundException {
         Key key;
         while (true) {
             do {
@@ -333,7 +330,7 @@ public class Main {
                     break;
                 case Enter:
                     players.clear();
-                    gameRun(terminal, players, mode, speed, m);
+                    gameRun(terminal, players, mode, speed, m, scanMenu);
                     break;
             }
         }
