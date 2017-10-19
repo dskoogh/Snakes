@@ -56,13 +56,13 @@ public class Main {
         scanMenu.scanText("selectPlayers", terminal);
 
         // Put red heart at first option
-        terminal.moveCursor(0,0);
+        terminal.moveCursor(40,13);
         terminal.applyForegroundColor(Terminal.Color.RED);
         terminal.putCharacter('♥');
         Key key;
 
-        int x = 0;
-        int y = 0;
+        int x = 40;
+        int y = 13;
         boolean modeChosen = false;
         while (!modeChosen) {
             do {
@@ -72,7 +72,7 @@ public class Main {
 
             switch (key.getKind()) {
                 case ArrowUp:
-                    if (y != 0) {
+                    if (y != 13) {
                         // Put white heart-char in old position
                         terminal.moveCursor(x, y);
                         terminal.applyForegroundColor(Terminal.Color.WHITE);
@@ -85,7 +85,7 @@ public class Main {
                     }
                     break;
                 case ArrowDown:
-                    if (y != 4) {
+                    if (y != 17) {
                         // Put white heart-char in old position
                         terminal.moveCursor(x, y);
                         terminal.applyForegroundColor(Terminal.Color.WHITE);
