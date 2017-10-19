@@ -170,9 +170,12 @@ public class Player {
             if (!player.isAlive) continue; // Sk
             if (!(player.getHead().getX() > 0 && player.getHead().getX() < length)) {
                 player.isAlive = false;
+                player.point += counter;
+    
             }
             if (!(player.getHead().getY() > 0 && player.getHead().getY() < width)) {
                 player.isAlive = false;
+                player.point += counter;
             }
         }
         

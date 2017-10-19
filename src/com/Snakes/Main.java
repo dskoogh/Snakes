@@ -259,13 +259,13 @@ public class Main {
                 m.stopAll(); // Stops mp3
                 Scan scanGameOver = new Scan();
                 scanGameOver.scanText("gameOver", terminal);
-                Scan.printScore(players, terminal);
                 break;
             }
-            
+    
             counter++;
         }
-        
+    
+        Scan.printScore(players, terminal);
         gameOver(terminal, players, m, scanMenu);
     }
 
