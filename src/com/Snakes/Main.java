@@ -11,6 +11,7 @@ import java.util.List;
 
 
 public class Main {
+
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 
         List<Player> players = new ArrayList<>();
@@ -239,7 +240,7 @@ public class Main {
             createApples(terminal, apples, apple, counter);
 
             // Print level
-//          scanLevel.scanText("levelOne-2", terminal);
+            scanLevel.scanGame("levelOne", terminal);
 
             // Put player on terminal
             putPlayerOnTerminal(terminal, players);
@@ -337,4 +338,5 @@ public class Main {
             }
         }
     }
+
 }

@@ -28,8 +28,36 @@ public class Scan {
         while (scanner.hasNextLine()) {
             s = scanner.nextLine();
             for (int i = 0; i < s.length() ; i++) {
-                terminal.moveCursor(i+x,y);
+                terminal.moveCursor(i + x, y);
                 terminal.putCharacter(s.charAt(i));
+            }
+            y++;
+        }
+    }
+    public void scanGame(String file, Terminal terminal) throws FileNotFoundException {
+
+        if (file == null) {
+            System.out.println("Error");
+        } else {
+            scanner = new Scanner(new File(file));
+        }
+        printGame(terminal);
+        scanner.close();
+    }
+
+    private void printGame(Terminal terminal) {
+        String s = "";
+        int x = 0;
+        int y = 0;
+        while (scanner.hasNextLine()) {
+            s = scanner.nextLine();
+            for (int i = 0; i < s.length() ; i++) {
+                if (s.charAt(i) == '█') {
+                    terminal.moveCursor(i + x, y);
+                    terminal.applyBackgroundColor(Terminal.Color.BLACK);
+                    terminal.putCharacter(s.charAt(i));
+
+                }
             }
             y++;
         }
