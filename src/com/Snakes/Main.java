@@ -18,7 +18,6 @@ public class Main {
         
         welcomeScreen(terminal, scanMenu);
         
-        // Select mode
         String mode = selectMode(terminal, scanMenu);
         
         gameRun(terminal, players, mode);
@@ -132,11 +131,11 @@ public class Main {
         
         switch (mode) {
             case "triple":
-                players.add(new Player('8','5','4','6'));
+                players.add(new Player('8','5','4','6', '\u265e'));
             case "double":
-                players.add(new Player('i', 'k', 'j', 'l'));
+                players.add(new Player('i', 'k', 'j', 'l', '\u265a'));
             case "single":
-                players.add(new Player('w', 's', 'a', 'd'));
+                players.add(new Player('w', 's', 'a', 'd','\u2764'));
                 break;
         }
         // Add players
@@ -225,13 +224,14 @@ public class Main {
     }
     
     private static void putPlayerOnTerminal(Terminal terminal, List<Player> players) {
-        for (int j = 0; j < players.size(); j++) {
-            for (int i = 0; i < players.get(j).getTail().size(); i++) {
-                terminal.moveCursor(players.get(j).getTail().get(i).getX(), players.get(j).getTail().get(i).getY());
-                if (i != 0)
+        
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = 0; j < players.get(i).getTail().size(); j++) {
+                terminal.moveCursor(players.get(i).getTail().get(j).getX(), players.get(i).getTail().get(j).getY());
+                if (j != 0)
                     terminal.putCharacter('\u25E9');
                 else
-                    terminal.putCharacter('♥');
+                    terminal.putCharacter(players.get(i).getHeadChar());
             }
         }
     }

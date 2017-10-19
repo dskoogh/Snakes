@@ -16,12 +16,13 @@ public class Player {
     private char dir = nextRight;
     private int countR = 0;
     private boolean isAlive = true;
+    private char headChar;
     
     public List<Tail> getTail() {
         return tail;
     }
     
-    public Player(char up, char down, char left, char right) {
+    public Player(char up, char down, char left, char right, char headChar) {
         Random random = new Random();
         this.nextUp = up;
         this.nextDown = down;
@@ -29,6 +30,11 @@ public class Player {
         this.nextRight = right;
         this.tail.add(new Tail(random.nextInt(20), random.nextInt(20)));
         this.right = true;
+        this.headChar = headChar;
+    }
+    
+    public char getHeadChar() {
+        return headChar;
     }
     
     public Tail getHead() {
