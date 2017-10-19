@@ -165,13 +165,13 @@ public class Player {
         }
         
         // Check for leaving the lanterna terminal boundaries
-        
+        int length = 100, width = 30;
         for (Player player : players) {
             if (!player.isAlive) continue;
-            if (!(player.getHead().getX() >= 0 && player.getHead().getX() < 100)) {
+            if (!(player.getHead().getX() >= 0 && player.getHead().getX() < length)) {
                 player.isAlive = false;
             }
-            if (!(player.getHead().getY() >= 0 && player.getHead().getY() < 30)) {
+            if (!(player.getHead().getY() >= 0 && player.getHead().getY() < width)) {
                 player.isAlive = false;
             }
         }
