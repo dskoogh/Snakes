@@ -100,13 +100,13 @@ public class Main {
         // Läs ut Game mode ur y
         String mode = "";
         switch (y) {
-            case 0:
+            case 13:
                 mode = "single";
                 break;
-            case 2:
+            case 15:
                 mode = "double";
                 break;
-            case 4:
+            case 17:
                 mode = "triple";
         }
         return mode;
@@ -207,6 +207,7 @@ public class Main {
         Thread.sleep(1000);
         terminal.clearScreen();
         scanMenu.scanText("noll", terminal);
+        Thread.sleep(500);
     }
 
     private static void gameRun(Terminal terminal, List<Player> players, String mode, int speed, MP3Player m) throws InterruptedException, FileNotFoundException {
